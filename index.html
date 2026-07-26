@@ -192,8 +192,6 @@
       /* ---------- SINGLE UNIFIED ITEM TABLE ---------- */
       .table-wrap {
         background: transparent;
-        overflow-x: auto;
-        overflow-y: visible;
         scrollbar-width: thin;
         scrollbar-color: var(--turmeric) var(--paper-deep);
       }
@@ -212,8 +210,27 @@
       .table-wrap::-webkit-scrollbar-thumb:hover {
         background: var(--turmeric-deep);
       }
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--turmeric) var(--paper-deep);
+      }
+      html::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      html::-webkit-scrollbar-track {
+        background: var(--paper-deep);
+      }
+      html::-webkit-scrollbar-thumb {
+        background: var(--turmeric);
+        border-radius: 8px;
+      }
+      html::-webkit-scrollbar-thumb:hover {
+        background: var(--turmeric-deep);
+      }
       table {
         width: 100%;
+        min-width: 900px;
         border-collapse: separate;
         border-spacing: 0;
         font-size: 13.5px;
@@ -362,8 +379,8 @@
         }
         table {
           font-size: 13px;
-          table-layout: auto;
-          min-width: 560px;
+          table-layout: fixed;
+          min-width: 640px;
           line-height: 1.8;
         }
         thead th {
@@ -378,7 +395,7 @@
         }
         td.desc {
           max-width: 130px;
-          font-size: 12.5px;
+          font-size: 13px;
         }
         td.desc .en {
           font-size: 10.5px;
@@ -444,9 +461,9 @@
       <div class="wrap" style="padding: 0">
         <div class="tabs">
           <button class="tab-btn active" data-tab="items">
-            ১. আইটেমের দাম
+            1. আইটেমের দাম
           </button>
-          <button class="tab-btn" data-tab="packages">২. প্যাকেজ হিসাব</button>
+          <button class="tab-btn" data-tab="packages">2. প্যাকেজ হিসাব</button>
         </div>
       </div>
     </div>
@@ -672,7 +689,7 @@
               en: "Shahi Jilabi",
               unit: "প্রতি কেজি",
             },
-            { code: "IF-07", bn: "বোরহানি", en: "Borhani", unit: "২০০ মিলি" },
+            { code: "IF-07", bn: "বোরহানি", en: "Borhani", unit: "200 মিলি" },
           ],
         },
         {
@@ -680,55 +697,55 @@
           items: [
             {
               code: "B-01",
-              bn: "বিস্কুট — বেলামি এনার্জি গো, ৬২ গ্রাম",
+              bn: "বিস্কুট — বেলামি এনার্জি গো, 62 গ্রাম",
               en: "BelleAme Energy Go, 62g",
               unit: "প্রতি প্যাক",
             },
             {
               code: "B-02",
-              bn: "বিস্কুট — বেলামি ডাইজেস্টিভ, ১৩৫ গ্রাম",
+              bn: "বিস্কুট — বেলামি ডাইজেস্টিভ, 135 গ্রাম",
               en: "BelleAme Digestive, 135g",
               unit: "প্রতি প্যাক",
             },
             {
               code: "B-03",
-              bn: "বিস্কুট — বেলামি ক্রেমো গোল্ডেন, ৮০ গ্রাম",
+              bn: "বিস্কুট — বেলামি ক্রেমো গোল্ডেন, 80 গ্রাম",
               en: "BelleAme Cremo Golden, 80g",
               unit: "প্রতি প্যাক",
             },
             {
               code: "B-04",
-              bn: "বিস্কুট — বেলামি ক্রেমো ভ্যানিলা, ৮০ গ্রাম",
+              bn: "বিস্কুট — বেলামি ক্রেমো ভ্যানিলা, 80 গ্রাম",
               en: "BelleAme Cremo Vanilla, 80g",
               unit: "প্রতি প্যাক",
             },
             {
               code: "B-05",
-              bn: "বিস্কুট — ফাস্ট চয়েজ/গ্র্যান্ড চয়েজ, ৭০ গ্রাম",
+              bn: "বিস্কুট — ফাস্ট চয়েজ/গ্র্যান্ড চয়েজ, 70 গ্রাম",
               en: "Fast/Grand Choice, 70g",
               unit: "প্রতি প্যাক",
             },
             {
               code: "B-06",
-              bn: "কুকিজ, ২ পিস",
+              bn: "কুকিজ, 2 পিস",
               en: "Cookies, 2 pcs",
               unit: "প্রতি ইউনিট",
             },
             {
               code: "B-07",
-              bn: "স্লাইসড ফ্রুট কেক, ৬০ গ্রাম",
+              bn: "স্লাইসড ফ্রুট কেক, 60 গ্রাম",
               en: "Sliced Fruit Cake, 60g",
               unit: "প্রতি পিস",
             },
             {
               code: "B-08",
-              bn: "সিঙ্গারা/চমচা, ৭০ গ্রাম",
+              bn: "সিঙ্গারা/চমচা, 70 গ্রাম",
               en: "Singara/Chomocha, 70g",
               unit: "প্রতি পিস",
             },
             {
               code: "B-09",
-              bn: "ভেজিটেবল রোল, ১০০ গ্রাম",
+              bn: "ভেজিটেবল রোল, 100 গ্রাম",
               en: "Vegetable Roll, 100g",
               unit: "প্রতি পিস",
             },
@@ -739,19 +756,19 @@
           items: [
             {
               code: "FR-01",
-              bn: "আপেল (লাল), ১০০ গ্রাম",
+              bn: "আপেল (লাল), 100 গ্রাম",
               en: "Apple (Red), 100g",
               unit: "প্রতি পিস",
             },
             {
               code: "FR-02",
-              bn: "কমলা, ১০০ গ্রাম",
+              bn: "কমলা, 100 গ্রাম",
               en: "Orange, 100g",
               unit: "প্রতি পিস",
             },
             {
               code: "FR-03",
-              bn: "আম/মৌসুমি ফল, ১০০ গ্রাম",
+              bn: "আম/মৌসুমি ফল, 100 গ্রাম",
               en: "Mango/Seasonal Fruit, 100g",
               unit: "প্রতি পিস",
             },
@@ -762,43 +779,43 @@
           items: [
             {
               code: "DR-01",
-              bn: "মিনারেল ওয়াটার, ৫ লিটার",
+              bn: "মিনারেল ওয়াটার, 5 লিটার",
               en: "Mineral Water, 5L",
               unit: "প্রতি বোতল",
             },
             {
               code: "DR-02",
-              bn: "মিনারেল ওয়াটার, ৫০০ মিলি",
+              bn: "মিনারেল ওয়াটার, 500 মিলি",
               en: "Mineral Water, 500ml",
               unit: "প্রতি বোতল",
             },
             {
               code: "DR-03",
-              bn: "আম/ফলের জুস, ১৬০ মিলি",
+              bn: "আম/ফলের জুস, 160 মিলি",
               en: "Mango/Fruit Juice, 160ml",
               unit: "প্রতি প্যাক",
             },
             {
               code: "DR-04",
-              bn: "মিষ্টি দই, ১০০ মিলি কাপ",
+              bn: "মিষ্টি দই, 100 মিলি কাপ",
               en: "Sweet Curd, 100ml cup",
               unit: "প্রতি কাপ",
             },
             {
               code: "DR-05",
-              bn: "ফিরনি, ১০০ মিলি কাপ",
+              bn: "ফিরনি, 100 মিলি কাপ",
               en: "Firnee, 100ml cup",
               unit: "প্রতি কাপ",
             },
             {
               code: "DR-06",
-              bn: "স্পেশাল মিষ্টি, ৬৫ গ্রাম",
+              bn: "স্পেশাল মিষ্টি, 65 গ্রাম",
               en: "Special Sweet, 65g",
               unit: "প্রতি পিস",
             },
             {
               code: "DR-07",
-              bn: "ডিসপোজেবল পেপার গ্লাস, ২০০ মিলি",
+              bn: "ডিসপোজেবল পেপার গ্লাস, 200 মিলি",
               en: "Disposable Paper Glass, 200ml",
               unit: "প্রতি পিস",
             },
@@ -859,8 +876,8 @@
             {
               code: "B-01",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "বিস্কুট বেলামি এনার্জি গো, ৬২ গ্রাম",
+              qtyLabel: "1 পিস",
+              desc: "বিস্কুট বেলামি এনার্জি গো, 62 গ্রাম",
             },
             {
               code: "P-03",
@@ -879,8 +896,8 @@
             {
               code: "B-02",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "বিস্কুট বেলামি ডাইজেস্টিভ, ১৩৫ গ্রাম",
+              qtyLabel: "1 পিস",
+              desc: "বিস্কুট বেলামি ডাইজেস্টিভ, 135 গ্রাম",
             },
             {
               code: "P-03",
@@ -899,8 +916,8 @@
             {
               code: "B-03",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "বিস্কুট বেলামি ক্রেমো গোল্ডেন, ৮০ গ্রাম",
+              qtyLabel: "1 পিস",
+              desc: "বিস্কুট বেলামি ক্রেমো গোল্ডেন, 80 গ্রাম",
             },
             {
               code: "P-03",
@@ -919,8 +936,8 @@
             {
               code: "B-04",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "বিস্কুট বেলামি ক্রেমো ভ্যানিলা, ৮০ গ্রাম",
+              qtyLabel: "1 পিস",
+              desc: "বিস্কুট বেলামি ক্রেমো ভ্যানিলা, 80 গ্রাম",
             },
             {
               code: "P-03",
@@ -939,8 +956,8 @@
             {
               code: "B-05",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "বিস্কুট ফাস্ট/গ্র্যান্ড চয়েজ, ৭০ গ্রাম",
+              qtyLabel: "1 পিস",
+              desc: "বিস্কুট ফাস্ট/গ্র্যান্ড চয়েজ, 70 গ্রাম",
             },
             {
               code: "P-03",
@@ -956,7 +973,7 @@
           group: "Snacks Single Item-17",
           mou: "প্রতি পিস",
           items: [
-            { code: "FR-01", qty: 1, qtyLabel: "১ পিস", desc: "আপেল (লাল)" },
+            { code: "FR-01", qty: 1, qtyLabel: "1 পিস", desc: "আপেল (লাল)" },
             {
               code: "P-03",
               qty: 1,
@@ -971,8 +988,8 @@
           group: "Snacks Single Item-19",
           mou: "প্রতি পিস",
           items: [
-            { code: "FR-02", qty: 1, qtyLabel: "১ পিস", desc: "কমলা" },
-            { code: "B-06", qty: 1, qtyLabel: "২ পিস", desc: "কুকিজ" },
+            { code: "FR-02", qty: 1, qtyLabel: "1 পিস", desc: "কমলা" },
+            { code: "B-06", qty: 1, qtyLabel: "2 পিস", desc: "কুকিজ" },
             {
               code: "P-03",
               qty: 1,
@@ -987,7 +1004,7 @@
           group: "Snacks Single Item-21",
           mou: "প্রতি পিস",
           items: [
-            { code: "B-08", qty: 1, qtyLabel: "১ পিস", desc: "সিঙ্গারা/চমচা" },
+            { code: "B-08", qty: 1, qtyLabel: "1 পিস", desc: "সিঙ্গারা/চমচা" },
             {
               code: "P-03",
               qty: 1,
@@ -1002,7 +1019,7 @@
           group: "Snacks Single Item-22",
           mou: "প্রতি পিস",
           items: [
-            { code: "B-09", qty: 1, qtyLabel: "১ পিস", desc: "ভেজিটেবল রোল" },
+            { code: "B-09", qty: 1, qtyLabel: "1 পিস", desc: "ভেজিটেবল রোল" },
             {
               code: "P-03",
               qty: 1,
@@ -1020,7 +1037,7 @@
             {
               code: "B-07",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "1 পিস",
               desc: "স্লাইসড ফ্রুট কেক",
             },
             {
@@ -1040,27 +1057,27 @@
             {
               code: "R-01",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "সাদা ভাত, ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "সাদা ভাত, 300 গ্রাম",
             },
             {
               code: "F-03",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "ছোট মাছ ভুনা/চচ্চড়ি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "ছোট মাছ ভুনা/চচ্চড়ি, 100 গ্রাম",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
-            { code: "E-01", qty: 1, qtyLabel: "১ পিস", desc: "ডিম ভুনা" },
+            { code: "E-01", qty: 1, qtyLabel: "1 পিস", desc: "ডিম ভুনা" },
             {
               code: "D-01",
               qty: 0.075,
-              qtyLabel: "১৫০ মিলি",
-              desc: "মসুর ডাল, ১৫০ মিলি",
+              qtyLabel: "150 মিলি",
+              desc: "মসুর ডাল, 150 মিলি",
             },
             {
               code: "P-01",
@@ -1079,26 +1096,26 @@
             {
               code: "R-01",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "সাদা ভাত, ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "সাদা ভাত, 300 গ্রাম",
             },
             {
               code: "F-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, 100 গ্রাম",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
             {
               code: "D-01",
               qty: 0.075,
-              qtyLabel: "১৫০ মিলি",
-              desc: "মসুর ডাল, ১৫০ মিলি",
+              qtyLabel: "150 মিলি",
+              desc: "মসুর ডাল, 150 মিলি",
             },
             {
               code: "P-01",
@@ -1117,26 +1134,26 @@
             {
               code: "R-01",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "সাদা ভাত, ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "সাদা ভাত, 300 গ্রাম",
             },
             {
               code: "F-02",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "ইলিশ মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "ইলিশ মাছ ভাজা/ভুনা, 100 গ্রাম",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
             {
               code: "D-01",
               qty: 0.075,
-              qtyLabel: "১৫০ মিলি",
-              desc: "মসুর ডাল, ১৫০ মিলি",
+              qtyLabel: "150 মিলি",
+              desc: "মসুর ডাল, 150 মিলি",
             },
             {
               code: "P-01",
@@ -1155,26 +1172,26 @@
             {
               code: "R-01",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "সাদা ভাত, ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "সাদা ভাত, 300 গ্রাম",
             },
             {
               code: "M-02",
               qty: 0.15,
-              qtyLabel: "১৫০ গ্রাম",
-              desc: "সোনালি মুরগি ভুনা/কারি, ১৫০ গ্রাম (২ পিস)",
+              qtyLabel: "150 গ্রাম",
+              desc: "সোনালি মুরগি ভুনা/কারি, 150 গ্রাম (2 পিস)",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
             {
               code: "D-01",
               qty: 0.075,
-              qtyLabel: "১৫০ মিলি",
-              desc: "মসুর ডাল, ১৫০ মিলি",
+              qtyLabel: "150 মিলি",
+              desc: "মসুর ডাল, 150 মিলি",
             },
             {
               code: "P-01",
@@ -1193,26 +1210,26 @@
             {
               code: "R-01",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "সাদা ভাত, ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "সাদা ভাত, 300 গ্রাম",
             },
             {
               code: "M-01",
               qty: 0.15,
-              qtyLabel: "১৫০ গ্রাম",
-              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+              qtyLabel: "150 গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, 150 গ্রাম (2 পিস)",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
             {
               code: "D-01",
               qty: 0.075,
-              qtyLabel: "১৫০ মিলি",
-              desc: "মসুর ডাল, ১৫০ মিলি",
+              qtyLabel: "150 মিলি",
+              desc: "মসুর ডাল, 150 মিলি",
             },
             {
               code: "P-01",
@@ -1231,26 +1248,26 @@
             {
               code: "R-01",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "সাদা ভাত, ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "সাদা ভাত, 300 গ্রাম",
             },
             {
               code: "M-01",
               qty: 0.15,
-              qtyLabel: "১৫০ গ্রাম",
-              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+              qtyLabel: "150 গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, 150 গ্রাম (2 পিস)",
             },
             {
               code: "F-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, 100 গ্রাম",
             },
             {
               code: "D-01",
               qty: 0.075,
-              qtyLabel: "১৫০ মিলি",
-              desc: "মসুর ডাল, ১৫০ মিলি",
+              qtyLabel: "150 মিলি",
+              desc: "মসুর ডাল, 150 মিলি",
             },
             {
               code: "P-01",
@@ -1269,16 +1286,16 @@
             {
               code: "R-03",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "চিকেন বিরিয়ানি চাল (চিনিগুড়া), ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "চিকেন বিরিয়ানি চাল (চিনিগুড়া), 300 গ্রাম",
             },
             {
               code: "M-02",
               qty: 0.125,
-              qtyLabel: "১২৫ গ্রাম",
+              qtyLabel: "125 গ্রাম",
               desc: "সোনালি মুরগি রোস্ট",
             },
-            { code: "E-01", qty: 1, qtyLabel: "১ পিস", desc: "সেদ্ধ ডিম" },
+            { code: "E-01", qty: 1, qtyLabel: "1 পিস", desc: "সেদ্ধ ডিম" },
             {
               code: "P-01",
               qty: 1,
@@ -1296,26 +1313,26 @@
             {
               code: "R-03",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "পোলাও চাল (চিনিগুড়া), ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "পোলাও চাল (চিনিগুড়া), 300 গ্রাম",
             },
             {
               code: "M-01",
               qty: 0.15,
-              qtyLabel: "১৫০ গ্রাম",
-              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+              qtyLabel: "150 গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, 150 গ্রাম (2 পিস)",
             },
             {
               code: "F-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, 100 গ্রাম",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
             {
               code: "P-01",
@@ -1334,26 +1351,26 @@
             {
               code: "R-03",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "পোলাও চাল (চিনিগুড়া), ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "পোলাও চাল (চিনিগুড়া), 300 গ্রাম",
             },
             {
               code: "M-01",
               qty: 0.15,
-              qtyLabel: "১৫০ গ্রাম",
-              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+              qtyLabel: "150 গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, 150 গ্রাম (2 পিস)",
             },
             {
               code: "F-02",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "ইলিশ মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "ইলিশ মাছ ভাজা/ভুনা, 100 গ্রাম",
             },
             {
               code: "V-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, 100 গ্রাম",
             },
             {
               code: "P-01",
@@ -1372,23 +1389,23 @@
             {
               code: "R-04",
               qty: 0.3,
-              qtyLabel: "৩০০ গ্রাম",
-              desc: "কাচ্চি বিরিয়ানি চাল (বাসমতি), ৩০০ গ্রাম",
+              qtyLabel: "300 গ্রাম",
+              desc: "কাচ্চি বিরিয়ানি চাল (বাসমতি), 300 গ্রাম",
             },
             {
               code: "M-01",
               qty: 0.15,
-              qtyLabel: "১৫০ গ্রাম",
-              desc: "খাসির মাংস, ১৫০ গ্রাম (২ পিস)",
+              qtyLabel: "150 গ্রাম",
+              desc: "খাসির মাংস, 150 গ্রাম (2 পিস)",
             },
             {
               code: "M-03",
               qty: 0.06,
-              qtyLabel: "৬০ গ্রাম",
-              desc: "চিকেন টিক্কা/শামি কাবাব, ৬০ গ্রাম",
+              qtyLabel: "60 গ্রাম",
+              desc: "চিকেন টিক্কা/শামি কাবাব, 60 গ্রাম",
             },
-            { code: "E-01", qty: 1, qtyLabel: "১ পিস", desc: "সেদ্ধ ডিম" },
-            { code: "IF-07", qty: 2, qtyLabel: "২ গ্লাস", desc: "বোরহানি" },
+            { code: "E-01", qty: 1, qtyLabel: "1 পিস", desc: "সেদ্ধ ডিম" },
+            { code: "IF-07", qty: 2, qtyLabel: "2 গ্লাস", desc: "বোরহানি" },
             {
               code: "P-01",
               qty: 1,
@@ -1406,20 +1423,20 @@
             {
               code: "R-01",
               qty: 0.4,
-              qtyLabel: "৪০০ গ্রাম (২ প্লেট)",
-              desc: "সাদা ভাত (২ প্লেট), ৪০০ গ্রাম",
+              qtyLabel: "400 গ্রাম (2 প্লেট)",
+              desc: "সাদা ভাত (2 প্লেট), 400 গ্রাম",
             },
             {
               code: "V-01",
               qty: 0.2,
-              qtyLabel: "২০০ গ্রাম (১ বাটি)",
-              desc: "মিশ্র সবজি ভাজি, ২০০ গ্রাম (১ বাটি)",
+              qtyLabel: "200 গ্রাম (1 বাটি)",
+              desc: "মিশ্র সবজি ভাজি, 200 গ্রাম (1 বাটি)",
             },
             {
               code: "D-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "মসুর ডাল, ২০০ মিলি",
+              qtyLabel: "100 গ্রাম",
+              desc: "মসুর ডাল, 200 মিলি",
             },
             {
               code: "P-01",
@@ -1438,40 +1455,40 @@
             {
               code: "IF-01",
               qty: 0.1,
-              qtyLabel: "১০০ গ্রাম",
-              desc: "ছোলা, ১০০ গ্রাম",
+              qtyLabel: "100 গ্রাম",
+              desc: "ছোলা, 100 গ্রাম",
             },
-            { code: "IF-02", qty: 1, qtyLabel: "১ পিস", desc: "বেগুনি" },
-            { code: "IF-03", qty: 2, qtyLabel: "২ পিস", desc: "পেঁয়াজু" },
+            { code: "IF-02", qty: 1, qtyLabel: "1 পিস", desc: "বেগুনি" },
+            { code: "IF-03", qty: 2, qtyLabel: "2 পিস", desc: "পেঁয়াজু" },
             {
               code: "IF-04",
               qty: 5,
-              qtyLabel: "৫ পিস",
+              qtyLabel: "5 পিস",
               desc: "খেজুর (আজওয়া/মরিয়ম)",
             },
             {
               code: "IF-05",
               qty: 0.05,
-              qtyLabel: "৫০ গ্রাম",
-              desc: "মুড়ি, ৫০ গ্রাম",
+              qtyLabel: "50 গ্রাম",
+              desc: "মুড়ি, 50 গ্রাম",
             },
             {
               code: "IF-06",
               qty: 0.08,
-              qtyLabel: "৮০ গ্রাম",
-              desc: "শাহী জিলাপি, ৮০ গ্রাম (২ পিস)",
+              qtyLabel: "80 গ্রাম",
+              desc: "শাহী জিলাপি, 80 গ্রাম (2 পিস)",
             },
             {
               code: "FR-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "1 পিস",
               desc: "আপেল/কমলা/আম (মৌসুমি)",
             },
             {
               code: "DR-03",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "আমের জুস, ১৬০ মিলি টেট্রা প্যাক",
+              qtyLabel: "1 পিস",
+              desc: "আমের জুস, 160 মিলি টেট্রা প্যাক",
             },
             {
               code: "P-01",
@@ -1490,8 +1507,8 @@
             {
               code: "DR-01",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "মিনারেল ওয়াটার, ৫ লিটার",
+              qtyLabel: "1 পিস",
+              desc: "মিনারেল ওয়াটার, 5 লিটার",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
@@ -1504,8 +1521,8 @@
             {
               code: "DR-02",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "মিনারেল ওয়াটার, ৫০০ মিলি (ব্র্যান্ডেড)",
+              qtyLabel: "1 পিস",
+              desc: "মিনারেল ওয়াটার, 500 মিলি (ব্র্যান্ডেড)",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
@@ -1518,8 +1535,8 @@
             {
               code: "DR-04",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "মিষ্টি দই, কাপ ১০০ মিলি",
+              qtyLabel: "1 পিস",
+              desc: "মিষ্টি দই, কাপ 100 মিলি",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
@@ -1532,8 +1549,8 @@
             {
               code: "DR-05",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "ফিরনি, কাপ ১০০ মিলি",
+              qtyLabel: "1 পিস",
+              desc: "ফিরনি, কাপ 100 মিলি",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
@@ -1546,8 +1563,8 @@
             {
               code: "DR-06",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "স্পেশাল মিষ্টি, ৬৫ গ্রাম",
+              qtyLabel: "1 পিস",
+              desc: "স্পেশাল মিষ্টি, 65 গ্রাম",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
@@ -1560,8 +1577,8 @@
             {
               code: "DR-07",
               qty: 1,
-              qtyLabel: "১ পিস",
-              desc: "ডিসপোজেবল পেপার গ্লাস, ২০০ মিলি",
+              qtyLabel: "1 পিস",
+              desc: "ডিসপোজেবল পেপার গ্লাস, 200 মিলি",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
@@ -1594,7 +1611,7 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "1 পিস",
               desc: "ব্রাউন পেপার প্যাকিং",
             },
             { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
@@ -1686,14 +1703,14 @@
         <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="cost" value="${s.cost || ""}" placeholder="0"></td>
         <td>
           <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="vatTk" value="${s.vatTk || ""}" placeholder="0">
-          <span class="pct-hint" id="vat-pct-${it.code}">০%</span>
+          <span class="pct-hint" id="vat-pct-${it.code}">0%</span>
         </td>
         <td>
           <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="taxTk" value="${s.taxTk || ""}" placeholder="0">
-          <span class="pct-hint" id="tax-pct-${it.code}">০%</span>
+          <span class="pct-hint" id="tax-pct-${it.code}">0%</span>
         </td>
         <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="profit" value="${s.profit || ""}" placeholder="0"></td>
-        <td class="final-rate-cell" id="final-${it.code}">০</td>
+        <td class="final-rate-cell" id="final-${it.code}">0</td>
       `;
             tbody.appendChild(tr);
           });
