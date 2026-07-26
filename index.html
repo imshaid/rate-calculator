@@ -257,25 +257,28 @@
         border-right: none;
       }
       .col-sl {
-        width: 6%;
+        width: 5%;
       }
       .col-name {
-        width: 26%;
+        width: 22%;
       }
       .col-unit {
-        width: 12%;
+        width: 10%;
+      }
+      .col-market {
+        width: 11%;
       }
       .col-cost {
-        width: 12%;
+        width: 11%;
       }
       .col-vat {
-        width: 12%;
+        width: 11%;
       }
       .col-tax {
-        width: 12%;
+        width: 11%;
       }
       .col-profit {
-        width: 10%;
+        width: 9%;
       }
       .col-final {
         width: 10%;
@@ -324,6 +327,11 @@
       td.sl-cell {
         font-weight: 700;
         color: var(--lentil);
+      }
+      td.market-price-cell {
+        color: var(--leaf);
+        font-weight: 600;
+        font-style: italic;
       }
 
       tr.section-row td {
@@ -419,28 +427,31 @@
           line-height: 1.6;
         }
         .col-sl {
-          width: 5%;
+          width: 4%;
         }
         .col-name {
-          width: 24%;
+          width: 20%;
         }
         .col-unit {
-          width: 11%;
+          width: 9%;
+        }
+        .col-market {
+          width: 10%;
         }
         .col-cost {
-          width: 13%;
+          width: 11%;
         }
         .col-vat {
-          width: 14%;
+          width: 13%;
         }
         .col-tax {
-          width: 14%;
+          width: 13%;
         }
         .col-profit {
           width: 9%;
         }
         .col-final {
-          width: 10%;
+          width: 11%;
         }
         .pkg-col-sl {
           width: 10%;
@@ -543,12 +554,15 @@
       <!-- ================= PANEL 1: ITEM MASTER (single table) ================= -->
       <div class="panel active" id="panel-items">
         <div class="help-note">
-          💡 <strong>যেভাবে ব্যবহার করবে:</strong> প্রতিটা জিনিস তুমি যে দামে
-          কেনো সেটা "কেনা দাম" ঘরে লিখো। "ভ্যাট" আর "ট্যাক্স"-এ সরাসরি টাকার অংক
-          লিখো, নিচে ছোট করে দেখাবে এটা কেনা দামের কত শতাংশ হচ্ছে। "লাভ" ঘরে
-          তুমি প্রতি ইউনিটে কত টাকা রাখতে চাও সেটা লিখো। সবশেষে ডানদিকে "মোট" এ
-          পুরো হিসাব চলে আসবে — এই দামটাই পরের ট্যাবে কাজে লাগবে। বাম পাশের
-          নম্বরটা মনে রেখো, পরের ট্যাবে এই নম্বর দিয়েই জিনিস চেনা যাবে।
+          💡 <strong>যেভাবে ব্যবহার করবে:</strong> "বাজার মূল্য" ঘরে বর্তমান
+          বাজারদরের একটা ধারণা দেওয়া আছে (রেফারেন্স হিসেবে, এটা বদলানো যায় না)
+          — এটা দেখে তুমি বুঝতে পারবে তোমার কেনা দাম বাজারের সাথে মিলছে কিনা।
+          প্রতিটা জিনিস তুমি যে দামে কেনো সেটা "কেনা দাম" ঘরে লিখো। "ভ্যাট" আর
+          "ট্যাক্স"-এ সরাসরি টাকার অংক লিখো, নিচে ছোট করে দেখাবে এটা কেনা দামের
+          কত শতাংশ হচ্ছে। "লাভ" ঘরে তুমি প্রতি ইউনিটে কত টাকা রাখতে চাও সেটা
+          লিখো। সবশেষে ডানদিকে "মোট" এ পুরো হিসাব চলে আসবে — এই দামটাই পরের
+          ট্যাবে কাজে লাগবে। বাম পাশের নম্বরটা মনে রেখো, পরের ট্যাবে এই নম্বর
+          দিয়েই জিনিস চেনা যাবে।
         </div>
         <div class="toolbar">
           <input
@@ -568,6 +582,7 @@
                 <th class="col-sl">নং</th>
                 <th class="col-name">জিনিসের নাম</th>
                 <th class="col-unit">পরিমাণ</th>
+                <th class="col-market">বাজার মূল্য</th>
                 <th class="col-cost">কেনা দাম</th>
                 <th class="col-vat">ভ্যাট</th>
                 <th class="col-tax">ট্যাক্স</th>
@@ -629,24 +644,28 @@
               bn: "মিনিকেট চাল",
               en: "Miniket Rice",
               unit: "প্রতি কেজি",
+              marketPrice: 80,
             },
             {
               code: "R-02",
               bn: "নাজিরশাইল/কাটারিভোগ চাল",
               en: "Nazirshail/Katarivog Rice",
               unit: "প্রতি কেজি",
+              marketPrice: 82,
             },
             {
               code: "R-03",
               bn: "চিনিগুড়া চাল",
               en: "Chinigura Rice",
               unit: "প্রতি কেজি",
+              marketPrice: 130,
             },
             {
               code: "R-04",
               bn: "বাসমতি চাল",
               en: "Basmati Rice",
               unit: "প্রতি কেজি",
+              marketPrice: 97,
             },
           ],
         },
@@ -658,24 +677,28 @@
               bn: "খাসির মাংস",
               en: "Mutton",
               unit: "প্রতি কেজি",
+              marketPrice: 1300,
             },
             {
               code: "M-02",
               bn: "সোনালি/দেশি মুরগি",
               en: "Sonali/Cock Chicken",
               unit: "প্রতি কেজি",
+              marketPrice: 320,
             },
             {
               code: "M-03",
               bn: "ব্রয়লার মুরগি",
               en: "Broiler Chicken",
               unit: "প্রতি কেজি",
+              marketPrice: 165,
             },
             {
               code: "M-04",
               bn: "দেশি হাঁসের মাংস",
               en: "Deshi Duck Meat",
               unit: "প্রতি কেজি",
+              marketPrice: 825,
             },
           ],
         },
@@ -687,18 +710,21 @@
               bn: "রুই/কাতলা মাছ",
               en: "Rui/Katal Fish",
               unit: "প্রতি কেজি",
+              marketPrice: 340,
             },
             {
               code: "F-02",
               bn: "ইলিশ মাছ",
               en: "Hilsha Fish",
               unit: "প্রতি কেজি",
+              marketPrice: 2000,
             },
             {
               code: "F-03",
               bn: "ছোট মাছ মিশ্র (মলা/পুঁটি/টেংরা)",
               en: "Small Fish Mix",
               unit: "প্রতি কেজি",
+              marketPrice: 500,
             },
           ],
         },
@@ -710,24 +736,28 @@
               bn: "ডিম (মুরগি, সেদ্ধ)",
               en: "Chicken Egg (boiled)",
               unit: "প্রতি পিস",
+              marketPrice: 11,
             },
             {
               code: "D-01",
               bn: "মসুর ডাল",
               en: "Musur Lentil",
               unit: "প্রতি কেজি",
+              marketPrice: 160,
             },
             {
               code: "V-01",
               bn: "মিশ্র মৌসুমি সবজি",
               en: "Mixed Seasonal Vegetables",
               unit: "প্রতি কেজি",
+              marketPrice: 80,
             },
             {
               code: "V-02",
               bn: "ভর্তার উপকরণ মিশ্র (আলু/টমেটো/বেগুন/শিম)",
               en: "Bhorta Ingredients Mix",
               unit: "প্রতি কেজি",
+              marketPrice: 90,
             },
           ],
         },
@@ -739,28 +769,50 @@
               bn: "ছোলা (শুকনা)",
               en: "Chola (dry chickpea)",
               unit: "প্রতি কেজি",
+              marketPrice: 95,
             },
-            { code: "IF-02", bn: "বেগুনি", en: "Beguni", unit: "প্রতি পিস" },
-            { code: "IF-03", bn: "পেঁয়াজু", en: "Peaiju", unit: "প্রতি পিস" },
+            {
+              code: "IF-02",
+              bn: "বেগুনি",
+              en: "Beguni",
+              unit: "প্রতি পিস",
+              marketPrice: 15,
+            },
+            {
+              code: "IF-03",
+              bn: "পেঁয়াজু",
+              en: "Peaiju",
+              unit: "প্রতি পিস",
+              marketPrice: 15,
+            },
             {
               code: "IF-04",
               bn: "খেজুর (আজওয়া/মরিয়ম)",
               en: "Dates (Ajwa/Morium)",
               unit: "প্রতি পিস",
+              marketPrice: 1950,
             },
             {
               code: "IF-05",
               bn: "মুড়ি",
               en: "Puffed Rice (Muri)",
               unit: "প্রতি কেজি",
+              marketPrice: 100,
             },
             {
               code: "IF-06",
               bn: "শাহী জিলাপি",
               en: "Shahi Jilabi",
               unit: "প্রতি কেজি",
+              marketPrice: 300,
             },
-            { code: "IF-07", bn: "বোরহানি", en: "Borhani", unit: "200 মিলি" },
+            {
+              code: "IF-07",
+              bn: "বোরহানি",
+              en: "Borhani",
+              unit: "200 মিলি",
+              marketPrice: 30,
+            },
           ],
         },
         {
@@ -771,54 +823,63 @@
               bn: "বিস্কুট — বেলামি এনার্জি গো, 62 গ্রাম",
               en: "BelleAme Energy Go, 62g",
               unit: "প্রতি প্যাক",
+              marketPrice: 15,
             },
             {
               code: "B-02",
               bn: "বিস্কুট — বেলামি ডাইজেস্টিভ, 135 গ্রাম",
               en: "BelleAme Digestive, 135g",
               unit: "প্রতি প্যাক",
+              marketPrice: 35,
             },
             {
               code: "B-03",
               bn: "বিস্কুট — বেলামি ক্রেমো গোল্ডেন, 80 গ্রাম",
               en: "BelleAme Cremo Golden, 80g",
               unit: "প্রতি প্যাক",
+              marketPrice: 28,
             },
             {
               code: "B-04",
               bn: "বিস্কুট — বেলামি ক্রেমো ভ্যানিলা, 80 গ্রাম",
               en: "BelleAme Cremo Vanilla, 80g",
               unit: "প্রতি প্যাক",
+              marketPrice: 28,
             },
             {
               code: "B-05",
               bn: "বিস্কুট — ফাস্ট চয়েজ/গ্র্যান্ড চয়েজ, 70 গ্রাম",
               en: "Fast/Grand Choice, 70g",
               unit: "প্রতি প্যাক",
+              marketPrice: 12,
             },
             {
               code: "B-06",
               bn: "কুকিজ, 2 পিস",
               en: "Cookies, 2 pcs",
               unit: "প্রতি ইউনিট",
+              marketPrice: 8,
             },
             {
               code: "B-07",
               bn: "স্লাইসড ফ্রুট কেক, 60 গ্রাম",
               en: "Sliced Fruit Cake, 60g",
               unit: "প্রতি পিস",
+              marketPrice: 40,
             },
             {
               code: "B-08",
               bn: "সিঙ্গারা/চমচা, 70 গ্রাম",
               en: "Singara/Chomocha, 70g",
               unit: "প্রতি পিস",
+              marketPrice: 10,
             },
             {
               code: "B-09",
               bn: "ভেজিটেবল রোল, 100 গ্রাম",
               en: "Vegetable Roll, 100g",
               unit: "প্রতি পিস",
+              marketPrice: 20,
             },
           ],
         },
@@ -830,18 +891,21 @@
               bn: "আপেল (লাল), 100 গ্রাম",
               en: "Apple (Red), 100g",
               unit: "প্রতি পিস",
+              marketPrice: 30,
             },
             {
               code: "FR-02",
               bn: "কমলা, 100 গ্রাম",
               en: "Orange, 100g",
               unit: "প্রতি পিস",
+              marketPrice: 27,
             },
             {
               code: "FR-03",
               bn: "আম/মৌসুমি ফল, 100 গ্রাম",
               en: "Mango/Seasonal Fruit, 100g",
               unit: "প্রতি পিস",
+              marketPrice: 25,
             },
           ],
         },
@@ -853,42 +917,49 @@
               bn: "মিনারেল ওয়াটার, 5 লিটার",
               en: "Mineral Water, 5L",
               unit: "প্রতি বোতল",
+              marketPrice: 95,
             },
             {
               code: "DR-02",
               bn: "মিনারেল ওয়াটার, 500 মিলি",
               en: "Mineral Water, 500ml",
               unit: "প্রতি বোতল",
+              marketPrice: 20,
             },
             {
               code: "DR-03",
               bn: "আম/ফলের জুস, 160 মিলি",
               en: "Mango/Fruit Juice, 160ml",
               unit: "প্রতি প্যাক",
+              marketPrice: 22,
             },
             {
               code: "DR-04",
               bn: "মিষ্টি দই, 100 মিলি কাপ",
               en: "Sweet Curd, 100ml cup",
               unit: "প্রতি কাপ",
+              marketPrice: 30,
             },
             {
               code: "DR-05",
               bn: "ফিরনি, 100 মিলি কাপ",
               en: "Firnee, 100ml cup",
               unit: "প্রতি কাপ",
+              marketPrice: 60,
             },
             {
               code: "DR-06",
               bn: "স্পেশাল মিষ্টি, 65 গ্রাম",
               en: "Special Sweet, 65g",
               unit: "প্রতি পিস",
+              marketPrice: 25,
             },
             {
               code: "DR-07",
               bn: "ডিসপোজেবল পেপার গ্লাস, 200 মিলি",
               en: "Disposable Paper Glass, 200ml",
               unit: "প্রতি পিস",
+              marketPrice: 1.4,
             },
           ],
         },
@@ -900,24 +971,28 @@
               bn: "ফয়েল লেমিনেটেড লাঞ্চ বক্স",
               en: "Foil Laminated Lunch Box",
               unit: "প্রতি পিস",
+              marketPrice: 8,
             },
             {
               code: "P-02",
               bn: "পেপার শপিং ব্যাগ (ব্র্যান্ডেড)",
               en: "Paper Shopping Bag (branded)",
               unit: "প্রতি পিস",
+              marketPrice: 11,
             },
             {
               code: "P-03",
               bn: "ব্রাউন পেপার প্যাকিং",
               en: "Brown Paper Packing",
               unit: "প্রতি পিস",
+              marketPrice: 5,
             },
             {
               code: "P-05",
               bn: "পরিবহন/ডেলিভারি খরচ",
               en: "Delivery/Transport Allocation",
               unit: "প্রতি প্যাকেজ",
+              marketPrice: 10,
             },
           ],
         },
@@ -1941,7 +2016,7 @@
 
           const sectionTr = document.createElement("tr");
           sectionTr.className = "section-row";
-          sectionTr.innerHTML = `<td colspan="8">${cat.name}</td>`;
+          sectionTr.innerHTML = `<td colspan="9">${cat.name}</td>`;
           tbody.appendChild(sectionTr);
 
           matchingItems.forEach((it) => {
@@ -1951,6 +2026,7 @@
         <td class="sl-cell">${it.sl}</td>
         <td class="desc">${it.bn}<span class="en">${it.en}</span></td>
         <td class="unit">${it.unit}</td>
+        <td class="market-price-cell">${it.marketPrice != null ? it.marketPrice : "—"}</td>
         <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="cost" value="${s.cost || ""}" placeholder="0"></td>
         <td>
           <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="vatTk" value="${s.vatTk || ""}" placeholder="0">
