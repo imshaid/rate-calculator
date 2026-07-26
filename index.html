@@ -49,9 +49,7 @@
         background: var(--ink);
         color: var(--paper);
         padding: 20px 24px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
+        position: relative;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
       }
       header .title-row {
@@ -85,10 +83,17 @@
         display: inline-block;
       }
 
+      .tabs-sticky-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--ink);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        padding: 10px 24px;
+      }
       .tabs {
         display: flex;
         gap: 8px;
-        margin-top: 16px;
         flex-wrap: wrap;
       }
       .tab-btn {
@@ -186,11 +191,26 @@
 
       /* ---------- SINGLE UNIFIED ITEM TABLE ---------- */
       .table-wrap {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        overflow: auto;
-        max-height: 78vh;
+        background: transparent;
+        overflow-x: auto;
+        overflow-y: visible;
+        scrollbar-width: thin;
+        scrollbar-color: var(--turmeric) var(--paper-deep);
+      }
+      .table-wrap::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .table-wrap::-webkit-scrollbar-track {
+        background: var(--paper-deep);
+        border-radius: 8px;
+      }
+      .table-wrap::-webkit-scrollbar-thumb {
+        background: var(--turmeric);
+        border-radius: 8px;
+      }
+      .table-wrap::-webkit-scrollbar-thumb:hover {
+        background: var(--turmeric-deep);
       }
       table {
         width: 100%;
@@ -198,6 +218,7 @@
         border-spacing: 0;
         font-size: 13.5px;
         table-layout: fixed;
+        background: var(--card);
       }
       thead th {
         background: var(--ink);
@@ -208,10 +229,10 @@
         text-align: center;
         font-size: 12.5px;
         white-space: nowrap;
-        position: sticky;
-        top: 0;
-        z-index: 5;
         border-right: 1px solid rgba(255, 255, 255, 0.15);
+        position: sticky;
+        top: var(--tabs-bar-height, 60px);
+        z-index: 10;
       }
       thead th:last-child {
         border-right: none;
@@ -222,6 +243,7 @@
         border-right: 1px solid var(--line);
         text-align: center;
         vertical-align: middle;
+        line-height: 1.8;
       }
       tbody td:last-child {
         border-right: none;
@@ -262,17 +284,24 @@
       input[type="number"] {
         width: 100%;
         max-width: 90px;
-        padding: 7px 4px;
-        border-radius: 7px;
-        border: 1px solid var(--line);
-        background: var(--input-bg);
+        padding: 6px 4px;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        background: transparent;
         text-align: center;
         font-family: inherit;
         font-size: 13.5px;
+        color: var(--ink);
+        transition: all 0.15s;
+      }
+      input[type="number"]:hover {
+        background: rgba(216, 155, 44, 0.08);
       }
       input[type="number"]:focus {
-        outline: 2px solid var(--turmeric);
+        outline: none;
         border-color: var(--turmeric);
+        background: var(--input-bg);
+        box-shadow: 0 0 0 2px rgba(216, 155, 44, 0.25);
       }
       .pct-hint {
         display: block;
@@ -305,33 +334,11 @@
         text-align: center;
       }
 
-      .summary-bar {
-        position: sticky;
-        bottom: 0;
-        background: var(--ink);
-        color: var(--paper);
-        padding: 12px 20px;
-        border-radius: 14px 14px 0 0;
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        font-size: 14px;
-      }
-      .summary-bar strong {
-        color: var(--turmeric);
-        font-family: "Baloo Da 2", inherit;
-        font-size: 16px;
-      }
-
       @media print {
         header,
         .toolbar,
         .tabs,
-        .help-note,
-        .summary-bar {
+        .help-note {
           display: none !important;
         }
         .panel {
@@ -343,22 +350,73 @@
       }
 
       @media (max-width: 700px) {
+        header {
+          position: static;
+        }
+        .wrap {
+          padding: 14px 10px;
+        }
+        .table-wrap {
+          overflow-x: auto;
+          overflow-y: visible;
+        }
         table {
+          font-size: 13px;
+          table-layout: auto;
+          min-width: 560px;
+          line-height: 1.8;
+        }
+        thead th {
+          font-size: 12px;
+          padding: 7px 5px;
+          border-right: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        tbody td {
+          padding: 7px 4px;
+          border-right: 1px solid var(--line);
+          line-height: 1.8;
+        }
+        td.desc {
+          max-width: 130px;
+          font-size: 12.5px;
+        }
+        td.desc .en {
+          font-size: 10.5px;
+        }
+        td.unit {
           font-size: 11.5px;
         }
         input[type="number"] {
-          width: 58px;
+          width: 42px;
+          max-width: 42px;
+          padding: 4px 2px;
+          font-size: 11px;
+          border-radius: 5px;
+        }
+        .pct-hint {
+          font-size: 9px;
+        }
+        .final-rate-cell {
           font-size: 11.5px;
         }
-        thead th {
-          font-size: 10px;
-          padding: 7px 3px;
+        tr.section-row td {
+          font-size: 12.5px;
+          padding: 8px 6px;
         }
-        tbody td {
-          padding: 6px 3px;
+        .help-note {
+          font-size: 12.5px;
+          padding: 12px 14px;
         }
-        td.desc .en {
-          font-size: 10px;
+        .toolbar {
+          gap: 8px;
+        }
+        .btn {
+          padding: 8px 14px;
+          font-size: 13px;
+        }
+        .search-box {
+          font-size: 13px;
+          padding: 8px 12px;
         }
       }
     </style>
@@ -380,6 +438,10 @@
             >
           </div>
         </div>
+      </div>
+    </header>
+    <div class="tabs-sticky-wrap">
+      <div class="wrap" style="padding: 0">
         <div class="tabs">
           <button class="tab-btn active" data-tab="items">
             ১. আইটেমের দাম
@@ -387,7 +449,7 @@
           <button class="tab-btn" data-tab="packages">২. প্যাকেজ হিসাব</button>
         </div>
       </div>
-    </header>
+    </div>
 
     <div class="wrap">
       <!-- ================= PANEL 1: ITEM MASTER (single table) ================= -->
@@ -396,10 +458,9 @@
           💡 <strong>যেভাবে ব্যবহার করবে:</strong> প্রতিটা জিনিস তুমি যে দামে
           কেনো সেটা "কেনা দাম" ঘরে লিখো। "ভ্যাট" আর "ট্যাক্স"-এ সরাসরি টাকার অংক
           লিখো, নিচে ছোট করে দেখাবে এটা কেনা দামের কত শতাংশ হচ্ছে। "লাভ" ঘরে
-          তুমি প্রতি ইউনিটে কত টাকা রাখতে চাও সেটা লিখো। সবশেষে ডানদিকে "সব
-          মিলিয়ে দাম" এ পুরো হিসাব চলে আসবে — এই দামটাই পরের ট্যাবে কাজে লাগবে।
-          বাম পাশের নম্বরটা মনে রেখো, পরের ট্যাবে এই নম্বর দিয়েই জিনিস চেনা
-          যাবে।
+          তুমি প্রতি ইউনিটে কত টাকা রাখতে চাও সেটা লিখো। সবশেষে ডানদিকে "মোট" এ
+          পুরো হিসাব চলে আসবে — এই দামটাই পরের ট্যাবে কাজে লাগবে। বাম পাশের
+          নম্বরটা মনে রেখো, পরের ট্যাবে এই নম্বর দিয়েই জিনিস চেনা যাবে।
         </div>
         <div class="toolbar">
           <input
@@ -418,12 +479,12 @@
               <tr>
                 <th style="width: 6%">নং</th>
                 <th style="width: 26%">জিনিসের নাম</th>
-                <th style="width: 12%">কী হিসেবে</th>
+                <th style="width: 12%">পরিমাণ</th>
                 <th style="width: 12%">কেনা দাম</th>
                 <th style="width: 12%">ভ্যাট</th>
                 <th style="width: 12%">ট্যাক্স</th>
                 <th style="width: 10%">লাভ</th>
-                <th style="width: 10%">সব মিলিয়ে দাম</th>
+                <th style="width: 10%">মোট</th>
               </tr>
             </thead>
             <tbody id="itemTableBody"></tbody>
@@ -437,8 +498,8 @@
           💡 আগের ট্যাবে যে দাম বসিয়েছ সেখান থেকেই এখানে প্রতিটা প্যাকেজের
           হিসাব নিজে থেকে হয়ে যাচ্ছে। প্রতিটা উপকরণের পাশে তার নম্বরটা দেওয়া
           আছে — আগের ট্যাবে ঐ নম্বর খুঁজলেই বুঝবে কোন জিনিস এটা। প্যাকেজিং আর
-          যাতায়াত খরচও প্রতিটা প্যাকেজে যোগ করা আছে। প্রতিটা প্যাকেজের শেষে "সব
-          মিলিয়ে দাম"-টাই তোমার ফর্মে বসানোর মতো চূড়ান্ত দাম।
+          যাতায়াত খরচও প্রতিটা প্যাকেজে যোগ করা আছে। প্রতিটা প্যাকেজের শেষে
+          "মোট"-টাই তোমার ফর্মে বসানোর মতো চূড়ান্ত দাম।
         </div>
         <div class="toolbar">
           <input
@@ -464,10 +525,6 @@
             <tbody id="packageTableBody"></tbody>
           </table>
         </div>
-      </div>
-
-      <div class="summary-bar" id="summaryBar" style="display: none">
-        <span id="summaryText"></span>
       </div>
     </div>
 
@@ -796,7 +853,7 @@
       const PACKAGES = [
         {
           sl: 1,
-          group: "বিস্কুট — এনার্জি গো (৬২ গ্রাম)",
+          group: "Snacks Single Item-02",
           mou: "প্রতি পিস",
           items: [
             {
@@ -808,15 +865,15 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 2,
-          group: "বিস্কুট — ডাইজেস্টিভ (১৩৫ গ্রাম)",
+          group: "Snacks Single Item-04",
           mou: "প্রতি পিস",
           items: [
             {
@@ -828,15 +885,15 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 3,
-          group: "বিস্কুট — ক্রেমো গোল্ডেন (৮০ গ্রাম)",
+          group: "Snacks Single Item-05",
           mou: "প্রতি পিস",
           items: [
             {
@@ -848,15 +905,15 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 4,
-          group: "বিস্কুট — ক্রেমো ভ্যানিলা (৮০ গ্রাম)",
+          group: "Snacks Single Item-06",
           mou: "প্রতি পিস",
           items: [
             {
@@ -868,15 +925,15 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 5,
-          group: "বিস্কুট — ফাস্ট/গ্র্যান্ড চয়েজ (৭০ গ্রাম)",
+          group: "Snacks Single Item-09",
           mou: "প্রতি পিস",
           items: [
             {
@@ -888,30 +945,30 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 6,
-          group: "আপেল (১ পিস)",
+          group: "Snacks Single Item-17",
           mou: "প্রতি পিস",
           items: [
             { code: "FR-01", qty: 1, qtyLabel: "১ পিস", desc: "আপেল (লাল)" },
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 7,
-          group: "কমলা ও কুকিজ",
+          group: "Snacks Single Item-19",
           mou: "প্রতি পিস",
           items: [
             { code: "FR-02", qty: 1, qtyLabel: "১ পিস", desc: "কমলা" },
@@ -919,45 +976,45 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 8,
-          group: "সিঙ্গারা/চমচা",
+          group: "Snacks Single Item-21",
           mou: "প্রতি পিস",
           items: [
             { code: "B-08", qty: 1, qtyLabel: "১ পিস", desc: "সিঙ্গারা/চমচা" },
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 9,
-          group: "ভেজিটেবল রোল",
+          group: "Snacks Single Item-22",
           mou: "প্রতি পিস",
           items: [
             { code: "B-09", qty: 1, qtyLabel: "১ পিস", desc: "ভেজিটেবল রোল" },
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 10,
-          group: "স্লাইসড ফ্রুট কেক",
+          group: "Snacks Single Item-27",
           mou: "প্রতি পিস",
           items: [
             {
@@ -969,15 +1026,15 @@
             {
               code: "P-03",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ব্রাউন পেপার)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 11,
-          group: "সাধারণ খাবার — ছোট মাছ ও ডিম দিয়ে",
+          group: "Lunch Basic-02",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1008,15 +1065,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 12,
-          group: "সাধারণ খাবার — রুই মাছ দিয়ে",
+          group: "Lunch Basic-03",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1046,15 +1103,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 13,
-          group: "সাধারণ খাবার — ইলিশ মাছ দিয়ে",
+          group: "Lunch Basic-04",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1084,15 +1141,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 14,
-          group: "সাধারণ খাবার — মুরগি দিয়ে",
+          group: "Lunch Basic-05",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1122,15 +1179,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 15,
-          group: "সাধারণ খাবার — খাসির মাংস দিয়ে",
+          group: "Lunch Basic-07",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1160,15 +1217,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 16,
-          group: "মানসম্মত খাবার — খাসি ও মাছ একসাথে",
+          group: "Lunch Standard-01",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1198,15 +1255,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 17,
-          group: "চিকেন বিরিয়ানি",
+          group: "Lunch Standard-02",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1225,15 +1282,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 18,
-          group: "পোলাও — খাসি ও রুই মাছ দিয়ে",
+          group: "Lunch Premium-01",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1263,15 +1320,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 19,
-          group: "পোলাও — খাসি ও ইলিশ মাছ দিয়ে",
+          group: "Lunch Premium-02",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1301,15 +1358,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 20,
-          group: "কাচ্চি বিরিয়ানি",
+          group: "Lunch Premium-03",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1335,15 +1392,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 21,
-          group: "গরম খাবার (ভাত-সবজি-ডাল)",
+          group: "Hot Meal Package-01",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1367,15 +1424,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল কার্টন)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 22,
-          group: "ইফতার প্যাকেজ",
+          group: "Iftar Basic Package-01",
           mou: "প্রতি প্যাকেজ",
           items: [
             {
@@ -1419,15 +1476,15 @@
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "প্যাকেজিং (ফয়েল বক্স)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 23,
-          group: "মিনারেল ওয়াটার (৫ লিটার)",
+          group: "Drinks Single Item-02",
           mou: "প্রতি বোতল",
           items: [
             {
@@ -1436,12 +1493,12 @@
               qtyLabel: "১ পিস",
               desc: "মিনারেল ওয়াটার, ৫ লিটার",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 24,
-          group: "মিনারেল ওয়াটার (৫০০ মিলি)",
+          group: "Drinks Single Item-03",
           mou: "প্রতি বোতল",
           items: [
             {
@@ -1450,12 +1507,12 @@
               qtyLabel: "১ পিস",
               desc: "মিনারেল ওয়াটার, ৫০০ মিলি (ব্র্যান্ডেড)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 25,
-          group: "মিষ্টি দই",
+          group: "Dessert Single Item-01",
           mou: "প্রতি কাপ",
           items: [
             {
@@ -1464,12 +1521,12 @@
               qtyLabel: "১ পিস",
               desc: "মিষ্টি দই, কাপ ১০০ মিলি",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 26,
-          group: "ফিরনি",
+          group: "Dessert Single Item-02",
           mou: "প্রতি কাপ",
           items: [
             {
@@ -1478,12 +1535,12 @@
               qtyLabel: "১ পিস",
               desc: "ফিরনি, কাপ ১০০ মিলি",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 27,
-          group: "স্পেশাল মিষ্টি",
+          group: "Dessert Single Item-03",
           mou: "প্রতি পিস",
           items: [
             {
@@ -1492,12 +1549,12 @@
               qtyLabel: "১ পিস",
               desc: "স্পেশাল মিষ্টি, ৬৫ গ্রাম",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 28,
-          group: "ডিসপোজেবল পেপার গ্লাস",
+          group: "Disposable Single Item-01",
           mou: "প্রতি পিস",
           items: [
             {
@@ -1506,32 +1563,32 @@
               qtyLabel: "১ পিস",
               desc: "ডিসপোজেবল পেপার গ্লাস, ২০০ মিলি",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 29,
-          group: "লাঞ্চ প্যাকিং সামগ্রী",
+          group: "Lunch Packing",
           mou: "প্রতি সেট",
           items: [
             {
               code: "P-01",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "ফয়েল লেমিনেটেড বক্স",
             },
             {
               code: "P-02",
               qty: 1,
-              qtyLabel: "১ পিস",
+              qtyLabel: "—",
               desc: "পেপার শপিং ব্যাগ (ব্র্যান্ডেড)",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
         {
           sl: 30,
-          group: "স্ন্যাক্স প্যাকিং সামগ্রী",
+          group: "Snacks Packing",
           mou: "প্রতি পিস",
           items: [
             {
@@ -1540,7 +1597,7 @@
               qtyLabel: "১ পিস",
               desc: "ব্রাউন পেপার প্যাকিং",
             },
-            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+            { code: "P-05", qty: 1, qtyLabel: "—", desc: "পরিবহন খরচ" },
           ],
         },
       ];
@@ -1723,24 +1780,11 @@
           const finalTr = document.createElement("tr");
           finalTr.className = "final-total-row";
           finalTr.innerHTML = `
-      <td colspan="3" style="text-align:center; font-weight:700;">এই প্যাকেজের সব মিলিয়ে দাম</td>
+      <td colspan="3" style="text-align:center; font-weight:700;">এই প্যাকেজের মোট</td>
       <td>${finalRate}</td>
     `;
           tbody.appendChild(finalTr);
         });
-
-        updateSummaryBar(filtered);
-      }
-
-      function updateSummaryBar(filtered) {
-        const bar = document.getElementById("summaryBar");
-        const text = document.getElementById("summaryText");
-        if (filtered.length === 0) {
-          bar.style.display = "none";
-          return;
-        }
-        bar.style.display = "flex";
-        text.innerHTML = `মোট <strong>${filtered.length}</strong>টি প্যাকেজ দেখানো হচ্ছে`;
       }
 
       /* ============================================================
@@ -1758,8 +1802,6 @@
           document
             .getElementById("panel-" + btn.dataset.tab)
             .classList.add("active");
-          document.getElementById("summaryBar").style.display =
-            btn.dataset.tab === "packages" ? "flex" : "none";
         });
       });
 
@@ -1790,6 +1832,21 @@
       /* ============================================================
    INITIAL RENDER
    ============================================================ */
+      /* ============================================================
+   DYNAMIC STICKY OFFSET: match table header sticky-top to actual tabs bar height
+   ============================================================ */
+      function updateStickyOffset() {
+        const tabsBar = document.querySelector(".tabs-sticky-wrap");
+        if (!tabsBar) return;
+        const h = tabsBar.getBoundingClientRect().height;
+        document.documentElement.style.setProperty(
+          "--tabs-bar-height",
+          h + "px",
+        );
+      }
+      window.addEventListener("resize", updateStickyOffset);
+      updateStickyOffset();
+
       renderItemTable();
       renderPackages();
     </script>
