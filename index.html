@@ -534,6 +534,17 @@
           <div class="table-header-frozen">
             <div class="table-header-clip">
               <table class="header-table">
+                <colgroup>
+                  <col class="col-sl" />
+                  <col class="col-name" />
+                  <col class="col-unit" />
+                  <col class="col-market" />
+                  <col class="col-cost" />
+                  <col class="col-vat" />
+                  <col class="col-tax" />
+                  <col class="col-profit" />
+                  <col class="col-final" />
+                </colgroup>
                 <thead>
                   <tr>
                     <th class="col-sl">নং</th>
@@ -552,6 +563,17 @@
           </div>
           <div class="table-body-scroll">
             <table class="body-table">
+              <colgroup>
+                <col class="col-sl" />
+                <col class="col-name" />
+                <col class="col-unit" />
+                <col class="col-market" />
+                <col class="col-cost" />
+                <col class="col-vat" />
+                <col class="col-tax" />
+                <col class="col-profit" />
+                <col class="col-final" />
+              </colgroup>
               <tbody id="itemTableBody"></tbody>
             </table>
           </div>
@@ -582,6 +604,12 @@
           <div class="table-header-frozen">
             <div class="table-header-clip">
               <table class="header-table">
+                <colgroup>
+                  <col class="pkg-col-sl" />
+                  <col class="pkg-col-desc" />
+                  <col class="pkg-col-qty" />
+                  <col class="pkg-col-rate" />
+                </colgroup>
                 <thead>
                   <tr>
                     <th class="pkg-col-sl">নং</th>
@@ -595,6 +623,12 @@
           </div>
           <div class="table-body-scroll">
             <table class="body-table">
+              <colgroup>
+                <col class="pkg-col-sl" />
+                <col class="pkg-col-desc" />
+                <col class="pkg-col-qty" />
+                <col class="pkg-col-rate" />
+              </colgroup>
               <tbody id="packageTableBody"></tbody>
             </table>
           </div>
@@ -1995,21 +2029,21 @@
             const s = getItemState(it.code);
             const tr = document.createElement("tr");
             tr.innerHTML = `
-        <td class="sl-cell">${it.sl}</td>
-        <td class="desc">${it.bn}<span class="en">${it.en}</span></td>
-        <td class="unit">${it.unit}</td>
-        <td class="market-price-cell">${it.marketPrice != null ? it.marketPrice : "—"}</td>
-        <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="cost" value="${s.cost || ""}" placeholder="0"></td>
-        <td>
+        <td class="sl-cell col-sl">${it.sl}</td>
+        <td class="desc col-name">${it.bn}<span class="en">${it.en}</span></td>
+        <td class="unit col-unit">${it.unit}</td>
+        <td class="market-price-cell col-market">${it.marketPrice != null ? it.marketPrice : "—"}</td>
+        <td class="col-cost"><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="cost" value="${s.cost || ""}" placeholder="0"></td>
+        <td class="col-vat">
           <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="vatTk" value="${s.vatTk || ""}" placeholder="0">
           <span class="pct-hint" id="vat-pct-${it.code}">0%</span>
         </td>
-        <td>
+        <td class="col-tax">
           <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="taxTk" value="${s.taxTk || ""}" placeholder="0">
           <span class="pct-hint" id="tax-pct-${it.code}">0%</span>
         </td>
-        <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="profit" value="${s.profit || ""}" placeholder="0"></td>
-        <td class="final-rate-cell" id="final-${it.code}">0</td>
+        <td class="col-profit"><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="profit" value="${s.profit || ""}" placeholder="0"></td>
+        <td class="final-rate-cell col-final" id="final-${it.code}">0</td>
       `;
             tbody.appendChild(tr);
           });
@@ -2085,10 +2119,10 @@
           rows.forEach((r) => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-        <td class="sl-cell">${r.itemSl}</td>
-        <td class="desc">${r.desc}</td>
-        <td class="unit">${r.qtyLabel || r.qty}</td>
-        <td>${r.rate.toFixed(2)}</td>
+        <td class="sl-cell pkg-col-sl">${r.itemSl}</td>
+        <td class="desc pkg-col-desc">${r.desc}</td>
+        <td class="unit pkg-col-qty">${r.qtyLabel || r.qty}</td>
+        <td class="pkg-col-rate">${r.rate.toFixed(2)}</td>
       `;
             tbody.appendChild(tr);
           });
