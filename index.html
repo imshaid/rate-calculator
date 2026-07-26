@@ -1,0 +1,1797 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>দাম হিসাব — আদর্শ মুন্সির হোটেল</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Baloo+Da+2:wght@600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #fbf3e7;
+        --paper-deep: #f3e4cc;
+        --ink: #2b2118;
+        --ink-soft: #5a4a3a;
+        --turmeric: #d89b2c;
+        --turmeric-deep: #b87a1a;
+        --lentil: #8b4a2e;
+        --leaf: #4b6b3a;
+        --line: #dcc9a3;
+        --card: #fffdf8;
+        --up: #b7472a;
+        --down: #37502a;
+        --input-bg: #fffcf6;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          "Hind Siliguri", "Noto Sans Bengali", "SolaimanLipi", "Siyam Rupali",
+          Arial, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.7;
+        padding-bottom: 60px;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family:
+          "Baloo Da 2", "Hind Siliguri", "Noto Sans Bengali", sans-serif;
+      }
+
+      header {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 20px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      }
+      header .title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      header h1 {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      header .sub {
+        font-size: 13px;
+        color: #d8c7a3;
+        margin-top: 2px;
+      }
+      .save-indicator {
+        font-size: 12.5px;
+        color: #b7d89c;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .save-indicator .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #5a8a3a;
+        display: inline-block;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      .tab-btn {
+        background: rgba(255, 255, 255, 0.08);
+        color: #e8ddc8;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 9px 20px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 14.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .tab-btn.active {
+        background: var(--turmeric);
+        color: var(--ink);
+        border-color: var(--turmeric);
+      }
+      .tab-btn:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .wrap {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 22px 20px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+        align-items: center;
+      }
+      .btn {
+        padding: 9px 18px;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink);
+        transition: all 0.15s;
+      }
+      .btn:hover {
+        background: var(--paper-deep);
+      }
+      .btn.primary {
+        background: var(--turmeric);
+        border-color: var(--turmeric);
+        color: var(--ink);
+      }
+      .btn.primary:hover {
+        background: var(--turmeric-deep);
+      }
+      .btn.danger {
+        color: var(--up);
+        border-color: var(--up);
+      }
+      .btn.danger:hover {
+        background: rgba(183, 71, 42, 0.08);
+      }
+      .search-box {
+        flex: 1;
+        min-width: 200px;
+        padding: 9px 14px;
+        border-radius: 9px;
+        border: 1px solid var(--line);
+        background: var(--card);
+        font-family: inherit;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .help-note {
+        background: var(--paper-deep);
+        border-left: 4px solid var(--turmeric-deep);
+        border-radius: 8px;
+        padding: 14px 18px;
+        font-size: 14px;
+        color: var(--ink-soft);
+        margin-bottom: 20px;
+      }
+
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      /* ---------- SINGLE UNIFIED ITEM TABLE ---------- */
+      .table-wrap {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: auto;
+        max-height: 78vh;
+      }
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 13.5px;
+        table-layout: fixed;
+      }
+      thead th {
+        background: var(--ink);
+        color: var(--paper);
+        font-family: inherit;
+        font-weight: 600;
+        padding: 11px 8px;
+        text-align: center;
+        font-size: 12.5px;
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      thead th:last-child {
+        border-right: none;
+      }
+      tbody td {
+        padding: 9px 8px;
+        border-bottom: 1px solid var(--line);
+        border-right: 1px solid var(--line);
+        text-align: center;
+        vertical-align: middle;
+      }
+      tbody td:last-child {
+        border-right: none;
+      }
+      tbody tr:hover {
+        background: rgba(216, 155, 44, 0.06);
+      }
+      td.desc {
+        text-align: center;
+        font-weight: 500;
+      }
+      td.desc .en {
+        display: block;
+        font-size: 11.5px;
+        color: var(--ink-soft);
+        font-style: italic;
+        font-family: "Hind Siliguri", Arial, sans-serif;
+      }
+      td.unit {
+        color: var(--ink-soft);
+        font-size: 12.5px;
+      }
+      td.sl-cell {
+        font-weight: 700;
+        color: var(--lentil);
+      }
+
+      tr.section-row td {
+        background: linear-gradient(135deg, #f3e4cc, #ead8b0);
+        color: var(--lentil);
+        font-weight: 700;
+        font-size: 14.5px;
+        text-align: center;
+        padding: 10px 8px;
+        border-right: none !important;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        max-width: 90px;
+        padding: 7px 4px;
+        border-radius: 7px;
+        border: 1px solid var(--line);
+        background: var(--input-bg);
+        text-align: center;
+        font-family: inherit;
+        font-size: 13.5px;
+      }
+      input[type="number"]:focus {
+        outline: 2px solid var(--turmeric);
+        border-color: var(--turmeric);
+      }
+      .pct-hint {
+        display: block;
+        font-size: 11px;
+        color: var(--ink-soft);
+        margin-top: 3px;
+      }
+      .final-rate-cell {
+        background: rgba(216, 155, 44, 0.14);
+        font-weight: 700;
+        color: var(--turmeric-deep);
+        font-size: 14.5px;
+      }
+
+      /* ---------- PACKAGE CALC (single table, section rows like items tab) ---------- */
+      tr.section-row.package-section td {
+        font-size: 15px;
+      }
+      tr.section-row.package-section .pkg-final {
+        float: left;
+        color: var(--lentil);
+        font-family: "Baloo Da 2", inherit;
+        font-size: 15.5px;
+      }
+      .final-total-row td {
+        background: rgba(216, 155, 44, 0.14);
+        font-weight: 700;
+        color: var(--turmeric-deep);
+        font-size: 14.5px;
+        text-align: center;
+      }
+
+      .summary-bar {
+        position: sticky;
+        bottom: 0;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 12px 20px;
+        border-radius: 14px 14px 0 0;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 14px;
+      }
+      .summary-bar strong {
+        color: var(--turmeric);
+        font-family: "Baloo Da 2", inherit;
+        font-size: 16px;
+      }
+
+      @media print {
+        header,
+        .toolbar,
+        .tabs,
+        .help-note,
+        .summary-bar {
+          display: none !important;
+        }
+        .panel {
+          display: block !important;
+        }
+        body {
+          background: #fff;
+        }
+      }
+
+      @media (max-width: 700px) {
+        table {
+          font-size: 11.5px;
+        }
+        input[type="number"] {
+          width: 58px;
+          font-size: 11.5px;
+        }
+        thead th {
+          font-size: 10px;
+          padding: 7px 3px;
+        }
+        tbody td {
+          padding: 6px 3px;
+        }
+        td.desc .en {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap" style="padding: 0">
+        <div class="title-row">
+          <div>
+            <h1>🍚 দাম হিসাব — আদর্শ মুন্সির হোটেল</h1>
+            <div class="sub">
+              World Vision Bangladesh ক্যাটারিং প্রস্তাবের জন্য
+            </div>
+          </div>
+          <div class="save-indicator">
+            <span class="dot"></span>
+            <span id="saveStatus"
+              >সব তথ্য এই ফোনে/কম্পিউটারে সেভ হয়ে থাকছে</span
+            >
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="items">
+            ১. আইটেমের দাম
+          </button>
+          <button class="tab-btn" data-tab="packages">২. প্যাকেজ হিসাব</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <!-- ================= PANEL 1: ITEM MASTER (single table) ================= -->
+      <div class="panel active" id="panel-items">
+        <div class="help-note">
+          💡 <strong>যেভাবে ব্যবহার করবে:</strong> প্রতিটা জিনিস তুমি যে দামে
+          কেনো সেটা "কেনা দাম" ঘরে লিখো। "ভ্যাট" আর "ট্যাক্স"-এ সরাসরি টাকার অংক
+          লিখো, নিচে ছোট করে দেখাবে এটা কেনা দামের কত শতাংশ হচ্ছে। "লাভ" ঘরে
+          তুমি প্রতি ইউনিটে কত টাকা রাখতে চাও সেটা লিখো। সবশেষে ডানদিকে "সব
+          মিলিয়ে দাম" এ পুরো হিসাব চলে আসবে — এই দামটাই পরের ট্যাবে কাজে লাগবে।
+          বাম পাশের নম্বরটা মনে রেখো, পরের ট্যাবে এই নম্বর দিয়েই জিনিস চেনা
+          যাবে।
+        </div>
+        <div class="toolbar">
+          <input
+            type="text"
+            class="search-box"
+            id="itemSearch"
+            placeholder="🔍 জিনিসের নাম বা নম্বর লিখে খুঁজো..."
+          />
+          <button class="btn danger" id="resetItems">
+            সব মুছে নতুন করে শুরু করো
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 6%">নং</th>
+                <th style="width: 26%">জিনিসের নাম</th>
+                <th style="width: 12%">কী হিসেবে</th>
+                <th style="width: 12%">কেনা দাম</th>
+                <th style="width: 12%">ভ্যাট</th>
+                <th style="width: 12%">ট্যাক্স</th>
+                <th style="width: 10%">লাভ</th>
+                <th style="width: 10%">সব মিলিয়ে দাম</th>
+              </tr>
+            </thead>
+            <tbody id="itemTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= PANEL 2: PACKAGE CALC ================= -->
+      <div class="panel" id="panel-packages">
+        <div class="help-note">
+          💡 আগের ট্যাবে যে দাম বসিয়েছ সেখান থেকেই এখানে প্রতিটা প্যাকেজের
+          হিসাব নিজে থেকে হয়ে যাচ্ছে। প্রতিটা উপকরণের পাশে তার নম্বরটা দেওয়া
+          আছে — আগের ট্যাবে ঐ নম্বর খুঁজলেই বুঝবে কোন জিনিস এটা। প্যাকেজিং আর
+          যাতায়াত খরচও প্রতিটা প্যাকেজে যোগ করা আছে। প্রতিটা প্যাকেজের শেষে "সব
+          মিলিয়ে দাম"-টাই তোমার ফর্মে বসানোর মতো চূড়ান্ত দাম।
+        </div>
+        <div class="toolbar">
+          <input
+            type="text"
+            class="search-box"
+            id="packageSearch"
+            placeholder="🔍 প্যাকেজের নাম লিখে খুঁজো..."
+          />
+          <button class="btn primary" onclick="window.print()">
+            🖨️ প্রিন্ট করো
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 10%">নং</th>
+                <th style="width: 50%">উপকরণের বিবরণ</th>
+                <th style="width: 22%">পরিমাণ</th>
+                <th style="width: 18%">দাম</th>
+              </tr>
+            </thead>
+            <tbody id="packageTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="summary-bar" id="summaryBar" style="display: none">
+        <span id="summaryText"></span>
+      </div>
+    </div>
+
+    <script>
+      /* ============================================================
+   DATA: Raw item master list — flat list with sequential SL
+   ============================================================ */
+      const ITEM_CATEGORIES = [
+        {
+          name: "চাল",
+          items: [
+            {
+              code: "R-01",
+              bn: "মিনিকেট চাল",
+              en: "Miniket Rice",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "R-02",
+              bn: "নাজিরশাইল/কাটারিভোগ চাল",
+              en: "Nazirshail/Katarivog Rice",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "R-03",
+              bn: "চিনিগুড়া চাল",
+              en: "Chinigura Rice",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "R-04",
+              bn: "বাসমতি চাল",
+              en: "Basmati Rice",
+              unit: "প্রতি কেজি",
+            },
+          ],
+        },
+        {
+          name: "মাংস ও মুরগি",
+          items: [
+            {
+              code: "M-01",
+              bn: "খাসির মাংস",
+              en: "Mutton",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "M-02",
+              bn: "সোনালি/দেশি মুরগি",
+              en: "Sonali/Cock Chicken",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "M-03",
+              bn: "ব্রয়লার মুরগি",
+              en: "Broiler Chicken",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "M-04",
+              bn: "দেশি হাঁসের মাংস",
+              en: "Deshi Duck Meat",
+              unit: "প্রতি কেজি",
+            },
+          ],
+        },
+        {
+          name: "মাছ",
+          items: [
+            {
+              code: "F-01",
+              bn: "রুই/কাতলা মাছ",
+              en: "Rui/Katal Fish",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "F-02",
+              bn: "ইলিশ মাছ",
+              en: "Hilsha Fish",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "F-03",
+              bn: "ছোট মাছ মিশ্র (মলা/পুঁটি/টেংরা)",
+              en: "Small Fish Mix",
+              unit: "প্রতি কেজি",
+            },
+          ],
+        },
+        {
+          name: "নিত্যপ্রয়োজনীয় জিনিস",
+          items: [
+            {
+              code: "E-01",
+              bn: "ডিম (মুরগি, সেদ্ধ)",
+              en: "Chicken Egg (boiled)",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "D-01",
+              bn: "মসুর ডাল",
+              en: "Musur Lentil",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "V-01",
+              bn: "মিশ্র মৌসুমি সবজি",
+              en: "Mixed Seasonal Vegetables",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "V-02",
+              bn: "ভর্তার উপকরণ মিশ্র (আলু/টমেটো/বেগুন/শিম)",
+              en: "Bhorta Ingredients Mix",
+              unit: "প্রতি কেজি",
+            },
+          ],
+        },
+        {
+          name: "ইফতার আইটেম",
+          items: [
+            {
+              code: "IF-01",
+              bn: "ছোলা (শুকনা)",
+              en: "Chola (dry chickpea)",
+              unit: "প্রতি কেজি",
+            },
+            { code: "IF-02", bn: "বেগুনি", en: "Beguni", unit: "প্রতি পিস" },
+            { code: "IF-03", bn: "পেঁয়াজু", en: "Peaiju", unit: "প্রতি পিস" },
+            {
+              code: "IF-04",
+              bn: "খেজুর (আজওয়া/মরিয়ম)",
+              en: "Dates (Ajwa/Morium)",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "IF-05",
+              bn: "মুড়ি",
+              en: "Puffed Rice (Muri)",
+              unit: "প্রতি কেজি",
+            },
+            {
+              code: "IF-06",
+              bn: "শাহী জিলাপি",
+              en: "Shahi Jilabi",
+              unit: "প্রতি কেজি",
+            },
+            { code: "IF-07", bn: "বোরহানি", en: "Borhani", unit: "২০০ মিলি" },
+          ],
+        },
+        {
+          name: "ব্র্যান্ডেড স্ন্যাক্স ও বিস্কুট",
+          items: [
+            {
+              code: "B-01",
+              bn: "বিস্কুট — বেলামি এনার্জি গো, ৬২ গ্রাম",
+              en: "BelleAme Energy Go, 62g",
+              unit: "প্রতি প্যাক",
+            },
+            {
+              code: "B-02",
+              bn: "বিস্কুট — বেলামি ডাইজেস্টিভ, ১৩৫ গ্রাম",
+              en: "BelleAme Digestive, 135g",
+              unit: "প্রতি প্যাক",
+            },
+            {
+              code: "B-03",
+              bn: "বিস্কুট — বেলামি ক্রেমো গোল্ডেন, ৮০ গ্রাম",
+              en: "BelleAme Cremo Golden, 80g",
+              unit: "প্রতি প্যাক",
+            },
+            {
+              code: "B-04",
+              bn: "বিস্কুট — বেলামি ক্রেমো ভ্যানিলা, ৮০ গ্রাম",
+              en: "BelleAme Cremo Vanilla, 80g",
+              unit: "প্রতি প্যাক",
+            },
+            {
+              code: "B-05",
+              bn: "বিস্কুট — ফাস্ট চয়েজ/গ্র্যান্ড চয়েজ, ৭০ গ্রাম",
+              en: "Fast/Grand Choice, 70g",
+              unit: "প্রতি প্যাক",
+            },
+            {
+              code: "B-06",
+              bn: "কুকিজ, ২ পিস",
+              en: "Cookies, 2 pcs",
+              unit: "প্রতি ইউনিট",
+            },
+            {
+              code: "B-07",
+              bn: "স্লাইসড ফ্রুট কেক, ৬০ গ্রাম",
+              en: "Sliced Fruit Cake, 60g",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "B-08",
+              bn: "সিঙ্গারা/চমচা, ৭০ গ্রাম",
+              en: "Singara/Chomocha, 70g",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "B-09",
+              bn: "ভেজিটেবল রোল, ১০০ গ্রাম",
+              en: "Vegetable Roll, 100g",
+              unit: "প্রতি পিস",
+            },
+          ],
+        },
+        {
+          name: "ফল",
+          items: [
+            {
+              code: "FR-01",
+              bn: "আপেল (লাল), ১০০ গ্রাম",
+              en: "Apple (Red), 100g",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "FR-02",
+              bn: "কমলা, ১০০ গ্রাম",
+              en: "Orange, 100g",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "FR-03",
+              bn: "আম/মৌসুমি ফল, ১০০ গ্রাম",
+              en: "Mango/Seasonal Fruit, 100g",
+              unit: "প্রতি পিস",
+            },
+          ],
+        },
+        {
+          name: "পানীয় ও দুগ্ধ",
+          items: [
+            {
+              code: "DR-01",
+              bn: "মিনারেল ওয়াটার, ৫ লিটার",
+              en: "Mineral Water, 5L",
+              unit: "প্রতি বোতল",
+            },
+            {
+              code: "DR-02",
+              bn: "মিনারেল ওয়াটার, ৫০০ মিলি",
+              en: "Mineral Water, 500ml",
+              unit: "প্রতি বোতল",
+            },
+            {
+              code: "DR-03",
+              bn: "আম/ফলের জুস, ১৬০ মিলি",
+              en: "Mango/Fruit Juice, 160ml",
+              unit: "প্রতি প্যাক",
+            },
+            {
+              code: "DR-04",
+              bn: "মিষ্টি দই, ১০০ মিলি কাপ",
+              en: "Sweet Curd, 100ml cup",
+              unit: "প্রতি কাপ",
+            },
+            {
+              code: "DR-05",
+              bn: "ফিরনি, ১০০ মিলি কাপ",
+              en: "Firnee, 100ml cup",
+              unit: "প্রতি কাপ",
+            },
+            {
+              code: "DR-06",
+              bn: "স্পেশাল মিষ্টি, ৬৫ গ্রাম",
+              en: "Special Sweet, 65g",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "DR-07",
+              bn: "ডিসপোজেবল পেপার গ্লাস, ২০০ মিলি",
+              en: "Disposable Paper Glass, 200ml",
+              unit: "প্রতি পিস",
+            },
+          ],
+        },
+        {
+          name: "প্যাকেজিং",
+          items: [
+            {
+              code: "P-01",
+              bn: "ফয়েল লেমিনেটেড লাঞ্চ বক্স",
+              en: "Foil Laminated Lunch Box",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "P-02",
+              bn: "পেপার শপিং ব্যাগ (ব্র্যান্ডেড)",
+              en: "Paper Shopping Bag (branded)",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "P-03",
+              bn: "ব্রাউন পেপার প্যাকিং",
+              en: "Brown Paper Packing",
+              unit: "প্রতি পিস",
+            },
+            {
+              code: "P-05",
+              bn: "পরিবহন/ডেলিভারি খরচ",
+              en: "Delivery/Transport Allocation",
+              unit: "প্রতি প্যাকেজ",
+            },
+          ],
+        },
+      ];
+
+      const FLAT_ITEMS = [];
+      let slCounter = 1;
+      ITEM_CATEGORIES.forEach((cat) => {
+        cat.items.forEach((it) => {
+          FLAT_ITEMS.push({ ...it, sl: slCounter, categoryName: cat.name });
+          slCounter++;
+        });
+      });
+      function findItemByCode(code) {
+        return FLAT_ITEMS.find((it) => it.code === code);
+      }
+
+      /* ============================================================
+   DATA: 30 packages — natural Bangla names, proper packaging + transport for every package
+   ============================================================ */
+      const PACKAGES = [
+        {
+          sl: 1,
+          group: "বিস্কুট — এনার্জি গো (৬২ গ্রাম)",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "B-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "বিস্কুট বেলামি এনার্জি গো, ৬২ গ্রাম",
+            },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 2,
+          group: "বিস্কুট — ডাইজেস্টিভ (১৩৫ গ্রাম)",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "B-02",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "বিস্কুট বেলামি ডাইজেস্টিভ, ১৩৫ গ্রাম",
+            },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 3,
+          group: "বিস্কুট — ক্রেমো গোল্ডেন (৮০ গ্রাম)",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "B-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "বিস্কুট বেলামি ক্রেমো গোল্ডেন, ৮০ গ্রাম",
+            },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 4,
+          group: "বিস্কুট — ক্রেমো ভ্যানিলা (৮০ গ্রাম)",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "B-04",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "বিস্কুট বেলামি ক্রেমো ভ্যানিলা, ৮০ গ্রাম",
+            },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 5,
+          group: "বিস্কুট — ফাস্ট/গ্র্যান্ড চয়েজ (৭০ গ্রাম)",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "B-05",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "বিস্কুট ফাস্ট/গ্র্যান্ড চয়েজ, ৭০ গ্রাম",
+            },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 6,
+          group: "আপেল (১ পিস)",
+          mou: "প্রতি পিস",
+          items: [
+            { code: "FR-01", qty: 1, qtyLabel: "১ পিস", desc: "আপেল (লাল)" },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 7,
+          group: "কমলা ও কুকিজ",
+          mou: "প্রতি পিস",
+          items: [
+            { code: "FR-02", qty: 1, qtyLabel: "১ পিস", desc: "কমলা" },
+            { code: "B-06", qty: 1, qtyLabel: "২ পিস", desc: "কুকিজ" },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 8,
+          group: "সিঙ্গারা/চমচা",
+          mou: "প্রতি পিস",
+          items: [
+            { code: "B-08", qty: 1, qtyLabel: "১ পিস", desc: "সিঙ্গারা/চমচা" },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 9,
+          group: "ভেজিটেবল রোল",
+          mou: "প্রতি পিস",
+          items: [
+            { code: "B-09", qty: 1, qtyLabel: "১ পিস", desc: "ভেজিটেবল রোল" },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 10,
+          group: "স্লাইসড ফ্রুট কেক",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "B-07",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "স্লাইসড ফ্রুট কেক",
+            },
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ব্রাউন পেপার)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 11,
+          group: "সাধারণ খাবার — ছোট মাছ ও ডিম দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "সাদা ভাত, ৩০০ গ্রাম",
+            },
+            {
+              code: "F-03",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "ছোট মাছ ভুনা/চচ্চড়ি, ১০০ গ্রাম",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            { code: "E-01", qty: 1, qtyLabel: "১ পিস", desc: "ডিম ভুনা" },
+            {
+              code: "D-01",
+              qty: 0.075,
+              qtyLabel: "১৫০ মিলি",
+              desc: "মসুর ডাল, ১৫০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 12,
+          group: "সাধারণ খাবার — রুই মাছ দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "সাদা ভাত, ৩০০ গ্রাম",
+            },
+            {
+              code: "F-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            {
+              code: "D-01",
+              qty: 0.075,
+              qtyLabel: "১৫০ মিলি",
+              desc: "মসুর ডাল, ১৫০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 13,
+          group: "সাধারণ খাবার — ইলিশ মাছ দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "সাদা ভাত, ৩০০ গ্রাম",
+            },
+            {
+              code: "F-02",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "ইলিশ মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            {
+              code: "D-01",
+              qty: 0.075,
+              qtyLabel: "১৫০ মিলি",
+              desc: "মসুর ডাল, ১৫০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 14,
+          group: "সাধারণ খাবার — মুরগি দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "সাদা ভাত, ৩০০ গ্রাম",
+            },
+            {
+              code: "M-02",
+              qty: 0.15,
+              qtyLabel: "১৫০ গ্রাম",
+              desc: "সোনালি মুরগি ভুনা/কারি, ১৫০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            {
+              code: "D-01",
+              qty: 0.075,
+              qtyLabel: "১৫০ মিলি",
+              desc: "মসুর ডাল, ১৫০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 15,
+          group: "সাধারণ খাবার — খাসির মাংস দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "সাদা ভাত, ৩০০ গ্রাম",
+            },
+            {
+              code: "M-01",
+              qty: 0.15,
+              qtyLabel: "১৫০ গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            {
+              code: "D-01",
+              qty: 0.075,
+              qtyLabel: "১৫০ মিলি",
+              desc: "মসুর ডাল, ১৫০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 16,
+          group: "মানসম্মত খাবার — খাসি ও মাছ একসাথে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "সাদা ভাত, ৩০০ গ্রাম",
+            },
+            {
+              code: "M-01",
+              qty: 0.15,
+              qtyLabel: "১৫০ গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "F-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+            },
+            {
+              code: "D-01",
+              qty: 0.075,
+              qtyLabel: "১৫০ মিলি",
+              desc: "মসুর ডাল, ১৫০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 17,
+          group: "চিকেন বিরিয়ানি",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-03",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "চিকেন বিরিয়ানি চাল (চিনিগুড়া), ৩০০ গ্রাম",
+            },
+            {
+              code: "M-02",
+              qty: 0.125,
+              qtyLabel: "১২৫ গ্রাম",
+              desc: "সোনালি মুরগি রোস্ট",
+            },
+            { code: "E-01", qty: 1, qtyLabel: "১ পিস", desc: "সেদ্ধ ডিম" },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 18,
+          group: "পোলাও — খাসি ও রুই মাছ দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-03",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "পোলাও চাল (চিনিগুড়া), ৩০০ গ্রাম",
+            },
+            {
+              code: "M-01",
+              qty: 0.15,
+              qtyLabel: "১৫০ গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "F-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "রুই/কাতলা মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 19,
+          group: "পোলাও — খাসি ও ইলিশ মাছ দিয়ে",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-03",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "পোলাও চাল (চিনিগুড়া), ৩০০ গ্রাম",
+            },
+            {
+              code: "M-01",
+              qty: 0.15,
+              qtyLabel: "১৫০ গ্রাম",
+              desc: "খাসির মাংস রেজালা/কোরমা/ভুনা, ১৫০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "F-02",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "ইলিশ মাছ ভাজা/ভুনা, ১০০ গ্রাম",
+            },
+            {
+              code: "V-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মিশ্র সবজি ভাজি, ১০০ গ্রাম",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 20,
+          group: "কাচ্চি বিরিয়ানি",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-04",
+              qty: 0.3,
+              qtyLabel: "৩০০ গ্রাম",
+              desc: "কাচ্চি বিরিয়ানি চাল (বাসমতি), ৩০০ গ্রাম",
+            },
+            {
+              code: "M-01",
+              qty: 0.15,
+              qtyLabel: "১৫০ গ্রাম",
+              desc: "খাসির মাংস, ১৫০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "M-03",
+              qty: 0.06,
+              qtyLabel: "৬০ গ্রাম",
+              desc: "চিকেন টিক্কা/শামি কাবাব, ৬০ গ্রাম",
+            },
+            { code: "E-01", qty: 1, qtyLabel: "১ পিস", desc: "সেদ্ধ ডিম" },
+            { code: "IF-07", qty: 2, qtyLabel: "২ গ্লাস", desc: "বোরহানি" },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 21,
+          group: "গরম খাবার (ভাত-সবজি-ডাল)",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "R-01",
+              qty: 0.4,
+              qtyLabel: "৪০০ গ্রাম (২ প্লেট)",
+              desc: "সাদা ভাত (২ প্লেট), ৪০০ গ্রাম",
+            },
+            {
+              code: "V-01",
+              qty: 0.2,
+              qtyLabel: "২০০ গ্রাম (১ বাটি)",
+              desc: "মিশ্র সবজি ভাজি, ২০০ গ্রাম (১ বাটি)",
+            },
+            {
+              code: "D-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "মসুর ডাল, ২০০ মিলি",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল কার্টন)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 22,
+          group: "ইফতার প্যাকেজ",
+          mou: "প্রতি প্যাকেজ",
+          items: [
+            {
+              code: "IF-01",
+              qty: 0.1,
+              qtyLabel: "১০০ গ্রাম",
+              desc: "ছোলা, ১০০ গ্রাম",
+            },
+            { code: "IF-02", qty: 1, qtyLabel: "১ পিস", desc: "বেগুনি" },
+            { code: "IF-03", qty: 2, qtyLabel: "২ পিস", desc: "পেঁয়াজু" },
+            {
+              code: "IF-04",
+              qty: 5,
+              qtyLabel: "৫ পিস",
+              desc: "খেজুর (আজওয়া/মরিয়ম)",
+            },
+            {
+              code: "IF-05",
+              qty: 0.05,
+              qtyLabel: "৫০ গ্রাম",
+              desc: "মুড়ি, ৫০ গ্রাম",
+            },
+            {
+              code: "IF-06",
+              qty: 0.08,
+              qtyLabel: "৮০ গ্রাম",
+              desc: "শাহী জিলাপি, ৮০ গ্রাম (২ পিস)",
+            },
+            {
+              code: "FR-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "আপেল/কমলা/আম (মৌসুমি)",
+            },
+            {
+              code: "DR-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "আমের জুস, ১৬০ মিলি টেট্রা প্যাক",
+            },
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "প্যাকেজিং (ফয়েল বক্স)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 23,
+          group: "মিনারেল ওয়াটার (৫ লিটার)",
+          mou: "প্রতি বোতল",
+          items: [
+            {
+              code: "DR-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "মিনারেল ওয়াটার, ৫ লিটার",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 24,
+          group: "মিনারেল ওয়াটার (৫০০ মিলি)",
+          mou: "প্রতি বোতল",
+          items: [
+            {
+              code: "DR-02",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "মিনারেল ওয়াটার, ৫০০ মিলি (ব্র্যান্ডেড)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 25,
+          group: "মিষ্টি দই",
+          mou: "প্রতি কাপ",
+          items: [
+            {
+              code: "DR-04",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "মিষ্টি দই, কাপ ১০০ মিলি",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 26,
+          group: "ফিরনি",
+          mou: "প্রতি কাপ",
+          items: [
+            {
+              code: "DR-05",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "ফিরনি, কাপ ১০০ মিলি",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 27,
+          group: "স্পেশাল মিষ্টি",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "DR-06",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "স্পেশাল মিষ্টি, ৬৫ গ্রাম",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 28,
+          group: "ডিসপোজেবল পেপার গ্লাস",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "DR-07",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "ডিসপোজেবল পেপার গ্লাস, ২০০ মিলি",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 29,
+          group: "লাঞ্চ প্যাকিং সামগ্রী",
+          mou: "প্রতি সেট",
+          items: [
+            {
+              code: "P-01",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "ফয়েল লেমিনেটেড বক্স",
+            },
+            {
+              code: "P-02",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "পেপার শপিং ব্যাগ (ব্র্যান্ডেড)",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+        {
+          sl: 30,
+          group: "স্ন্যাক্স প্যাকিং সামগ্রী",
+          mou: "প্রতি পিস",
+          items: [
+            {
+              code: "P-03",
+              qty: 1,
+              qtyLabel: "১ পিস",
+              desc: "ব্রাউন পেপার প্যাকিং",
+            },
+            { code: "P-05", qty: 1, qtyLabel: "১ পিস", desc: "পরিবহন খরচ" },
+          ],
+        },
+      ];
+
+      /* ============================================================
+   STATE MANAGEMENT
+   ============================================================ */
+      const STORAGE_KEY = "wvb_rate_calculator_v3";
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {
+          console.warn("Could not load saved data", e);
+        }
+        return { items: {} };
+      }
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          flashSaveIndicator();
+        } catch (e) {
+          console.warn("Could not save data", e);
+        }
+      }
+      let saveTimeout;
+      function flashSaveIndicator() {
+        const el = document.getElementById("saveStatus");
+        el.textContent = "✓ সংরক্ষণ হয়েছে";
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+          el.textContent = "সব তথ্য এই ফোনে/কম্পিউটারে সেভ হয়ে থাকছে";
+        }, 1500);
+      }
+
+      let state = loadState();
+      // state.items[code] = { cost, vatTk, taxTk, profit }
+
+      function getItemState(code) {
+        if (!state.items[code])
+          state.items[code] = { cost: 0, vatTk: 0, taxTk: 0, profit: 0 };
+        return state.items[code];
+      }
+
+      function getItemFinalRate(code) {
+        const s = getItemState(code);
+        const cost = parseFloat(s.cost) || 0;
+        const vatTk = parseFloat(s.vatTk) || 0;
+        const taxTk = parseFloat(s.taxTk) || 0;
+        const profit = parseFloat(s.profit) || 0;
+        return cost + vatTk + taxTk + profit;
+      }
+
+      /* ============================================================
+   RENDER: Item Master List (single table, section rows)
+   ============================================================ */
+      function renderItemTable(filterText = "") {
+        const tbody = document.getElementById("itemTableBody");
+        tbody.innerHTML = "";
+        const ft = filterText.trim().toLowerCase();
+
+        ITEM_CATEGORIES.forEach((cat) => {
+          const matchingItems = FLAT_ITEMS.filter(
+            (it) =>
+              it.categoryName === cat.name &&
+              (!ft ||
+                it.bn.toLowerCase().includes(ft) ||
+                it.en.toLowerCase().includes(ft) ||
+                String(it.sl).includes(ft)),
+          );
+          if (matchingItems.length === 0) return;
+
+          const sectionTr = document.createElement("tr");
+          sectionTr.className = "section-row";
+          sectionTr.innerHTML = `<td colspan="8">${cat.name}</td>`;
+          tbody.appendChild(sectionTr);
+
+          matchingItems.forEach((it) => {
+            const s = getItemState(it.code);
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+        <td class="sl-cell">${it.sl}</td>
+        <td class="desc">${it.bn}<span class="en">${it.en}</span></td>
+        <td class="unit">${it.unit}</td>
+        <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="cost" value="${s.cost || ""}" placeholder="0"></td>
+        <td>
+          <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="vatTk" value="${s.vatTk || ""}" placeholder="0">
+          <span class="pct-hint" id="vat-pct-${it.code}">০%</span>
+        </td>
+        <td>
+          <input type="number" step="0.01" min="0" data-code="${it.code}" data-field="taxTk" value="${s.taxTk || ""}" placeholder="0">
+          <span class="pct-hint" id="tax-pct-${it.code}">০%</span>
+        </td>
+        <td><input type="number" step="0.01" min="0" data-code="${it.code}" data-field="profit" value="${s.profit || ""}" placeholder="0"></td>
+        <td class="final-rate-cell" id="final-${it.code}">০</td>
+      `;
+            tbody.appendChild(tr);
+          });
+        });
+
+        tbody.querySelectorAll("input[data-code]").forEach((inp) => {
+          inp.addEventListener("input", onItemInputChange);
+        });
+
+        FLAT_ITEMS.forEach((it) => updateItemDisplay(it.code));
+      }
+
+      function onItemInputChange(e) {
+        const code = e.target.dataset.code;
+        const field = e.target.dataset.field;
+        const s = getItemState(code);
+        const val = parseFloat(e.target.value) || 0;
+        s[field] = val;
+
+        saveState();
+        updateItemDisplay(code);
+        renderPackages(document.getElementById("packageSearch").value);
+      }
+
+      function updateItemDisplay(code) {
+        const s = getItemState(code);
+        const cost = parseFloat(s.cost) || 0;
+        const vatTk = parseFloat(s.vatTk) || 0;
+        const taxTk = parseFloat(s.taxTk) || 0;
+        const vatPct = cost > 0 ? (vatTk / cost) * 100 : 0;
+        const taxPct = cost > 0 ? (taxTk / cost) * 100 : 0;
+        const finalRate = getItemFinalRate(code);
+
+        const vatPctEl = document.getElementById("vat-pct-" + code);
+        const taxPctEl = document.getElementById("tax-pct-" + code);
+        const finalEl = document.getElementById("final-" + code);
+        if (vatPctEl) vatPctEl.textContent = vatPct.toFixed(1) + "%";
+        if (taxPctEl) taxPctEl.textContent = taxPct.toFixed(1) + "%";
+        if (finalEl) finalEl.textContent = finalRate.toFixed(2);
+      }
+
+      /* ============================================================
+   RENDER: Package Calculation Tab
+   ============================================================ */
+      function renderPackages(filterText = "") {
+        const tbody = document.getElementById("packageTableBody");
+        tbody.innerHTML = "";
+        const ft = filterText.trim().toLowerCase();
+
+        const filtered = PACKAGES.filter(
+          (p) =>
+            !ft ||
+            p.group.toLowerCase().includes(ft) ||
+            String(p.sl).includes(ft),
+        );
+
+        filtered.forEach((pkg) => {
+          let total = 0;
+          const rows = pkg.items.map((line) => {
+            const itemDef = findItemByCode(line.code);
+            const rate = getItemFinalRate(line.code);
+            const lineCost = rate * line.qty;
+            total += lineCost;
+            return { ...line, rate, itemSl: itemDef ? itemDef.sl : "?" };
+          });
+          const finalRate = Math.round(total);
+
+          const sectionTr = document.createElement("tr");
+          sectionTr.className = "section-row package-section";
+          sectionTr.innerHTML = `<td colspan="4">${pkg.sl}. ${pkg.group} <span style="font-weight:500; font-size:13px;">(${pkg.mou})</span></td>`;
+          tbody.appendChild(sectionTr);
+
+          rows.forEach((r) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+        <td class="sl-cell">${r.itemSl}</td>
+        <td class="desc">${r.desc}</td>
+        <td class="unit">${r.qtyLabel || r.qty}</td>
+        <td>${r.rate.toFixed(2)}</td>
+      `;
+            tbody.appendChild(tr);
+          });
+
+          const finalTr = document.createElement("tr");
+          finalTr.className = "final-total-row";
+          finalTr.innerHTML = `
+      <td colspan="3" style="text-align:center; font-weight:700;">এই প্যাকেজের সব মিলিয়ে দাম</td>
+      <td>${finalRate}</td>
+    `;
+          tbody.appendChild(finalTr);
+        });
+
+        updateSummaryBar(filtered);
+      }
+
+      function updateSummaryBar(filtered) {
+        const bar = document.getElementById("summaryBar");
+        const text = document.getElementById("summaryText");
+        if (filtered.length === 0) {
+          bar.style.display = "none";
+          return;
+        }
+        bar.style.display = "flex";
+        text.innerHTML = `মোট <strong>${filtered.length}</strong>টি প্যাকেজ দেখানো হচ্ছে`;
+      }
+
+      /* ============================================================
+   TAB SWITCHING
+   ============================================================ */
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          document
+            .querySelectorAll(".panel")
+            .forEach((p) => p.classList.remove("active"));
+          btn.classList.add("active");
+          document
+            .getElementById("panel-" + btn.dataset.tab)
+            .classList.add("active");
+          document.getElementById("summaryBar").style.display =
+            btn.dataset.tab === "packages" ? "flex" : "none";
+        });
+      });
+
+      /* ============================================================
+   SEARCH
+   ============================================================ */
+      document
+        .getElementById("itemSearch")
+        .addEventListener("input", (e) => renderItemTable(e.target.value));
+      document
+        .getElementById("packageSearch")
+        .addEventListener("input", (e) => renderPackages(e.target.value));
+
+      /* ============================================================
+   RESET
+   ============================================================ */
+      document.getElementById("resetItems").addEventListener("click", () => {
+        if (
+          confirm("সত্যিই সব দাম মুছে ফেলতে চাও? এটা আর ফিরিয়ে আনা যাবে না।")
+        ) {
+          state = { items: {} };
+          saveState();
+          renderItemTable(document.getElementById("itemSearch").value);
+          renderPackages(document.getElementById("packageSearch").value);
+        }
+      });
+
+      /* ============================================================
+   INITIAL RENDER
+   ============================================================ */
+      renderItemTable();
+      renderPackages();
+    </script>
+  </body>
+</html>
